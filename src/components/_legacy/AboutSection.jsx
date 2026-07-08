@@ -1,7 +1,7 @@
 import { Award, GraduationCap, CheckCircle2 } from 'lucide-react'
 import Container from '../ui/Container'
-import SectionHeading from '../ui/SectionHeading'
-import ImagePlaceholder from '../ui/ImagePlaceholder'
+import SectionHeading from './SectionHeading'
+import ImagePlaceholder from './ImagePlaceholder'
 import Button from '../ui/Button'
 
 const highlights = [

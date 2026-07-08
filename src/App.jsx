@@ -1,24 +1,30 @@
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import WhatsAppButton from './components/layout/WhatsAppButton'
-import HeroSection from './components/sections/HeroSection'
-import BenefitsSection from './components/sections/BenefitsSection'
-import ServicesSection from './components/sections/ServicesSection'
-import AboutSection from './components/sections/AboutSection'
-import TestimonialsSection from './components/sections/TestimonialsSection'
-import ContactSection from './components/sections/ContactSection'
+import Hero from './components/sections/Hero'
+import Trust from './components/sections/Trust'
+import Specialties from './components/sections/Specialties'
+import Structure from './components/sections/Structure'
+import Process from './components/sections/Process'
+import Team from './components/sections/Team'
+import Audience from './components/sections/Audience'
+import FAQ from './components/sections/FAQ'
+import FinalCTA from './components/sections/FinalCTA'
 
 export default function App() {
   return (
     <>
       <Header />
       <main>
-        <HeroSection />
-        <BenefitsSection />
-        <ServicesSection />
-        <AboutSection />
-        <TestimonialsSection />
-        <ContactSection />
+        <Hero />
+        <Trust />
+        <Specialties />
+        <Structure />
+        <Process />
+        <Team />
+        <Audience />
+        <FAQ />
+        <FinalCTA />
       </main>
       <Footer />
       <WhatsAppButton />

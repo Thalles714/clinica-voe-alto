@@ -1,4 +1,4 @@
-import Badge from './Badge'
+import Badge from '../ui/Badge'
 
 export default function SectionHeading({
   badge,

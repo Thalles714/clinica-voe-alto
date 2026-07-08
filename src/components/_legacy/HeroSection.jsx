@@ -2,7 +2,7 @@ import { ArrowRight, Star, Sparkles } from 'lucide-react'
 import Container from '../ui/Container'
 import Button from '../ui/Button'
 import Badge from '../ui/Badge'
-import ImagePlaceholder from '../ui/ImagePlaceholder'
+import ImagePlaceholder from './ImagePlaceholder'
 
 const stats = [
   { value: '2.000+', label: 'Pacientes atendidos' },

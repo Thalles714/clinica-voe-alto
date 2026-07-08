@@ -7,7 +7,7 @@ import {
   Sun,
 } from 'lucide-react'
 import Container from '../ui/Container'
-import SectionHeading from '../ui/SectionHeading'
+import SectionHeading from './SectionHeading'
 import Card from '../ui/Card'
 import Button from '../ui/Button'
 
