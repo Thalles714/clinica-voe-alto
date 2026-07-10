@@ -1,5 +1,4 @@
 import Container from '../ui/Container'
-import Card from '../ui/Card'
 import SectionTitle from '../ui/SectionTitle'
 
 const trustItems = [
@@ -110,15 +109,15 @@ export default function Trust() {
   return (
     <section
       id="confianca"
-      className="section-atmosphere-soft-gray relative overflow-hidden py-14 sm:py-20 lg:py-24"
+      className="section-atmosphere-trust relative overflow-hidden py-14 sm:py-20 lg:py-24"
       aria-label="Por que escolher a Voe Alto"
     >
       <div
-        className="pointer-events-none absolute -right-24 -top-16 h-72 w-72 rounded-full bg-brand-light-pink/35 blur-3xl"
+        className="pointer-events-none absolute -left-20 top-0 h-64 w-64 rounded-full bg-brand-blue/[0.07] blur-3xl"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-brand-blue/[0.05] blur-3xl"
+        className="pointer-events-none absolute -right-16 bottom-0 h-56 w-56 rounded-full bg-brand-light-pink/25 blur-3xl"
         aria-hidden="true"
       />
 
@@ -127,28 +126,34 @@ export default function Trust() {
           eyebrow="Por que escolher a Voe Alto"
           title="Experiência, escuta e cuidado integrado"
           description="Mais do que uma lista de especialidades: uma equipe preparada para ouvir, orientar e acompanhar cada paciente e família com clareza e respeito."
-          eyebrowVariant="blue"
+          eyebrowVariant="pink"
         />
 
-        <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:gap-6">
-          {trustItems.map((item) => {
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-5">
+          {trustItems.map((item, index) => {
             const Icon = item.icon
 
             return (
-              <Card key={item.title} hover className="flex h-full flex-col p-7">
+              <article
+                key={item.title}
+                className="group relative flex h-full flex-col border-t-2 border-brand-blue/80 bg-brand-white/70 px-5 pb-6 pt-5 backdrop-blur-sm transition-colors duration-300 hover:bg-brand-white sm:px-6 sm:pb-7 sm:pt-6"
+              >
                 <div
-                  className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-light-pink/50 text-brand-blue"
+                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-brand-blue text-brand-white shadow-sm shadow-brand-blue/20"
                   aria-hidden="true"
                 >
                   <Icon />
                 </div>
-                <h3 className="text-lg font-semibold leading-snug text-brand-dark">
+                <span className="mb-2 text-xs font-semibold tracking-[0.14em] text-brand-blue/55 uppercase">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <h3 className="text-lg font-semibold leading-snug text-brand-blue">
                   {item.title}
                 </h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-dark/70 sm:text-base">
+                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-brand-dark/65 sm:text-[0.95rem]">
                   {item.description}
                 </p>
-              </Card>
+              </article>
             )
           })}
         </div>

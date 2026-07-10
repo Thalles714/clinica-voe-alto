@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import Container from '../ui/Container'
-import Card from '../ui/Card'
-import Badge from '../ui/Badge'
 import SectionTitle from '../ui/SectionTitle'
 import { specialties, specialtyWhatsappMessage } from '../../data/specialties'
 import { whatsappUrl } from '../../data/clinic'
@@ -24,27 +22,56 @@ function ArrowIcon() {
   )
 }
 
-function SpecialtyCard({ specialty, decorative = false }) {
-  return (
-    <Card
-      hover={!decorative}
-      className="flex h-full w-[16.5rem] shrink-0 flex-col p-4 sm:w-[20rem] sm:p-5 lg:w-[21.25rem] lg:p-6"
-    >
-      <Badge variant="blue" className="w-fit px-3 py-1 text-xs">
-        {specialty.category}
-      </Badge>
+const cardThemes = [
+  {
+    card: 'border border-brand-light-gray bg-brand-white shadow-sm shadow-brand-dark/5',
+    badge: 'bg-brand-blue/10 text-brand-blue ring-1 ring-brand-blue/15',
+    title: 'text-brand-dark',
+    description: 'text-brand-dark/70',
+    link: 'text-brand-blue hover:text-brand-pink focus-visible:ring-brand-blue/30',
+  },
+  {
+    card: 'border border-brand-blue bg-brand-blue shadow-md shadow-brand-blue/20',
+    badge: 'bg-brand-white/15 text-brand-light-pink ring-1 ring-brand-white/20',
+    title: 'text-brand-white',
+    description: 'text-brand-white/80',
+    link: 'text-brand-light-pink hover:text-brand-white focus-visible:ring-brand-white/40',
+  },
+]
 
-      <h3 className="mt-3 text-base font-semibold leading-snug text-brand-dark sm:text-lg">
+/* Regular white / blue alternation */
+const cardTonePattern = [0, 1]
+
+function SpecialtyCard({ specialty, decorative = false, toneIndex = 0 }) {
+  const theme = cardThemes[toneIndex]
+
+  return (
+    <div
+      className={[
+        'group flex h-full w-[16.5rem] shrink-0 flex-col rounded-3xl p-4 transition-all duration-300 sm:w-[20rem] sm:p-5 lg:w-[21.25rem] lg:p-6',
+        theme.card,
+        !decorative && 'hover:-translate-y-0.5',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      <span
+        className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide ${theme.badge}`}
+      >
+        {specialty.category}
+      </span>
+
+      <h3 className={`mt-3 text-base font-semibold leading-snug sm:text-lg ${theme.title}`}>
         {specialty.title}
       </h3>
 
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-brand-dark/70">
+      <p className={`mt-2 flex-1 text-sm leading-relaxed ${theme.description}`}>
         {specialty.description}
       </p>
 
       {decorative ? (
         <span
-          className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-blue"
+          className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold ${theme.link.split(' ')[0]}`}
           aria-hidden="true"
         >
           Falar sobre este atendimento
@@ -55,14 +82,14 @@ function SpecialtyCard({ specialty, decorative = false }) {
           href={whatsappUrl(specialtyWhatsappMessage(specialty.title))}
           target="_blank"
           rel="noopener noreferrer"
-          className="group mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+          className={`group mt-4 inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 ${theme.link}`}
           aria-label={`Falar sobre ${specialty.title} pelo WhatsApp`}
         >
           Falar sobre este atendimento
           <ArrowIcon />
         </a>
       )}
-    </Card>
+    </div>
   )
 }
 
@@ -74,13 +101,17 @@ function SpecialtySet({ decorative = false }) {
       aria-label={decorative ? undefined : 'Lista de especialidades'}
       aria-hidden={decorative ? true : undefined}
     >
-      {specialties.map((specialty) => (
+      {specialties.map((specialty, index) => (
         <div
           key={`${decorative ? 'dup-' : ''}${specialty.title}`}
           className="shrink-0"
           role={decorative ? undefined : 'listitem'}
         >
-          <SpecialtyCard specialty={specialty} decorative={decorative} />
+          <SpecialtyCard
+            specialty={specialty}
+            decorative={decorative}
+            toneIndex={cardTonePattern[index % 2]}
+          />
         </div>
       ))}
     </div>

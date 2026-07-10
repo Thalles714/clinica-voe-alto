@@ -64,6 +64,13 @@ body {
     #ffffff;
 }
 
+.section-atmosphere-trust {
+  background:
+    radial-gradient(ellipse 70% 55% at 0% 100%, rgba(31, 61, 113, 0.06), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(241, 205, 219, 0.16), transparent 50%),
+    linear-gradient(180deg, #ffffff 0%, #f3f6fb 100%);
+}
+
 .section-atmosphere-specialties {
   background:
     linear-gradient(180deg, #ffffff 0%, #faf7f8 45%, #ffffff 100%);
