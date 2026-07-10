@@ -144,8 +144,7 @@ Serviços:
 
 Para solicitar um projeto, orçamento ou parceria:
 
-**Desenvolvedor:** Thalles Leal  
-**GitHub:** [@thallestleal](https://github.com/thallestleal)
+thallestleal@gmail.com
 
 ---
 
