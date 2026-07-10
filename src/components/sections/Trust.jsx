@@ -4,9 +4,9 @@ import SectionTitle from '../ui/SectionTitle'
 
 const trustItems = [
   {
-    title: 'Mais de 10 anos',
+    title: '3 anos de atuação',
     description:
-      'Uma trajetória dedicada ao acompanhamento de famílias e às diferentes fases do desenvolvimento.',
+      'Uma clínica dedicada ao acompanhamento de famílias e às diferentes fases do desenvolvimento.',
     icon: YearsIcon,
   },
   {

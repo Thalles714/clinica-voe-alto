@@ -9,7 +9,7 @@ const galleryItems = [
     title: 'Fachada da clínica',
     description: 'Fácil de encontrar e pronta para receber você.',
     src: '/imagens/estrutura/fachada-clinica-voe-alto.jpg',
-    alt: 'Fachada da Clínica Voe Alto no Setor Sul, em Aparecida de Goiânia',
+    alt: 'Fachada da Clínica Voe Alto no St. dos Afonsos, em Aparecida de Goiânia',
     featured: true,
     objectPosition: 'object-[center_top]',
   },

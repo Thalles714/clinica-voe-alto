@@ -27,7 +27,7 @@ export const faq = [
   {
     question: 'Onde a clínica está localizada?',
     answer:
-      'Ficamos em Aparecida de Goiânia, no Setor Sul: Rua 101, nº 387, Quadra F-17, Lote 43. Você também pode ver a localização pelo Google Maps no site.',
+      'Ficamos em Aparecida de Goiânia, no St. dos Afonsos: R. Igaçaba, Q 77, lote 9, sobrado 4, CEP 74916-270, próximo ao Buriti Shopping. Você também pode ver a localização pelo Google Maps no site.',
   },
   {
     question: 'O atendimento é feito pelo WhatsApp?',

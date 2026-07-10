@@ -6,7 +6,7 @@ export const clinic = {
   instagram: 'https://www.instagram.com/espaco.voealto/',
   instagramHandle: '@espaco.voealto',
   address:
-    'Rua 101, nº 387, Quadra F-17, Lote 43, Setor Sul, Aparecida de Goiânia - GO',
+    'R. Igaçaba, Q 77, lote 9, sobrado 4 - St. dos Afonsos, Aparecida de Goiânia - próximo ao Buriti Shopping - GO, 74916-270',
   logo: '/imagens/brand/logo.svg',
   cnpj: '18.697.023/0001-62',
   tagline:
@@ -38,5 +38,5 @@ export function whatsappUrl(message = whatsappBookingMessage) {
 }
 
 export function locationUrl() {
-  return 'https://maps.app.goo.gl/BsUns757PDx22H2c9'
+  return 'https://www.google.com/maps/search/?api=1&query=R.+Iga%C3%A7aba,+Q+77,+lote+9,+sobrado+4+-+St.+dos+Afonsos,+Aparecida+de+Goi%C3%A2nia+-+GO,+74916-270'
 }

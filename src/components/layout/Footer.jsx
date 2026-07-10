@@ -104,11 +104,13 @@ export default function Footer() {
                   href={locationUrl()}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 font-semibold text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  className="inline-flex items-start gap-2 font-semibold text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
                   aria-label="Ver localização da Clínica Voe Alto no Google Maps"
                 >
                   <PinIcon />
-                  Ver localização
+                  <span className="font-normal leading-relaxed text-brand-dark/75">
+                    {clinic.address}
+                  </span>
                 </a>
               </li>
             </ul>

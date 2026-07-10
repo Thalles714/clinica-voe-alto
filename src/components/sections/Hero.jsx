@@ -6,12 +6,12 @@ import { whatsappUrl, locationUrl } from '../../data/clinic'
 const benefits = [
   'Atendimento infantil, adolescente e adulto',
   'Equipe multidisciplinar',
-  'Mais de 10 anos de atuação',
+  '3 anos de atuação',
   'Orientação pelo WhatsApp',
 ]
 
 const trustCards = [
-  { label: '+10 anos', position: 'left-4 top-4 sm:left-5 sm:top-5' },
+  { label: '3 anos de cuidado', position: 'left-4 top-4 sm:left-5 sm:top-5' },
   { label: 'Equipe multidisciplinar', position: 'bottom-4 left-4 sm:bottom-5 sm:left-5' },
 ]
 

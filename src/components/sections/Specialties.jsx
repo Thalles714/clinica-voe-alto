@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Container from '../ui/Container'
 import Card from '../ui/Card'
 import Badge from '../ui/Badge'
@@ -27,7 +28,7 @@ function SpecialtyCard({ specialty, decorative = false }) {
   return (
     <Card
       hover={!decorative}
-      className="flex h-full w-[340px] shrink-0 flex-col p-5 sm:p-6"
+      className="flex h-full w-[min(18.75rem,78vw)] shrink-0 flex-col p-5 sm:w-[340px] sm:p-6"
     >
       <Badge variant="blue" className="w-fit px-3 py-1 text-xs">
         {specialty.category}
@@ -87,6 +88,8 @@ function SpecialtySet({ decorative = false }) {
 }
 
 export default function Specialties() {
+  const [paused, setPaused] = useState(false)
+
   return (
     <section
       id="especialidades"
@@ -107,46 +110,37 @@ export default function Specialties() {
         />
       </Container>
 
-      {/* Mobile: manual horizontal snap scroll */}
-      <div className="relative z-10 md:hidden">
-        <Container>
-          <div
-            className="specialties-scrollbar-hide -mx-1 flex gap-4 overflow-x-auto px-1 pb-2 snap-x snap-mandatory"
-            role="list"
-            aria-label="Lista de especialidades"
-          >
-            {specialties.map((specialty) => (
-              <div key={specialty.title} className="snap-start shrink-0" role="listitem">
-                <SpecialtyCard specialty={specialty} />
-              </div>
-            ))}
-          </div>
-          <p className="mt-5 text-center text-sm text-brand-dark/55">
-            Arraste para ver mais especialidades.
-          </p>
-        </Container>
-      </div>
-
-      {/* Desktop / tablet+: calm continuous marquee */}
-      <div className="relative z-10 hidden md:block">
+      <div className="relative z-10">
         <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#faf7f8] via-brand-white/90 to-transparent xl:w-24"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#faf7f8] via-brand-white/90 to-transparent sm:w-16 xl:w-24"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#faf7f8] via-brand-white/90 to-transparent xl:w-24"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#faf7f8] via-brand-white/90 to-transparent sm:w-16 xl:w-24"
           aria-hidden="true"
         />
 
-        <div className="specialties-marquee">
+        <div
+          className={`specialties-marquee${paused ? ' is-paused' : ''}`}
+          onPointerDown={() => setPaused(true)}
+          onPointerUp={() => setPaused(false)}
+          onPointerCancel={() => setPaused(false)}
+          onPointerLeave={() => setPaused(false)}
+        >
           <div className="specialties-marquee-track">
             <SpecialtySet />
             <SpecialtySet decorative />
           </div>
         </div>
 
-        <p className="mt-6 text-center text-sm text-brand-dark/55">
-          Passe o mouse ou foque nos cards para pausar e conhecer cada atendimento.
+        <p className="mt-6 px-4 text-center text-sm text-brand-dark/55">
+          <span className="md:hidden">
+            O carrossel desliza automaticamente. Toque para pausar e conhecer cada
+            atendimento.
+          </span>
+          <span className="hidden md:inline">
+            Passe o mouse ou foque nos cards para pausar e conhecer cada atendimento.
+          </span>
         </p>
       </div>
     </section>
