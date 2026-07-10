@@ -164,12 +164,12 @@ export default function Structure() {
               className="absolute inset-0 bg-gradient-to-r from-brand-dark/50 via-brand-dark/20 to-transparent"
               aria-hidden="true"
             />
-            <figcaption className="absolute inset-y-0 left-0 flex max-w-md flex-col justify-end p-5 sm:p-7">
-              <p className="text-lg font-semibold text-brand-white sm:text-xl">
-                Desenvolvimento em cada etapa
+            <figcaption className="absolute inset-y-0 left-0 flex max-w-[15rem] flex-col justify-end p-4 sm:max-w-md sm:p-7">
+              <p className="text-base font-semibold text-brand-white sm:text-xl">
+                Desenvolvimento contínuo
               </p>
-              <p className="mt-1 text-sm leading-relaxed text-brand-white/85 sm:text-base">
-                Apoio contínuo para fortalecer habilidades, autonomia e bem-estar ao longo da vida.
+              <p className="mt-1 text-sm leading-snug text-brand-white/85 sm:text-base sm:leading-relaxed">
+                Apoio para fortalecer habilidades, autonomia e bem-estar.
               </p>
             </figcaption>
           </div>

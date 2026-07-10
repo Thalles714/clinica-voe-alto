@@ -138,6 +138,10 @@ export default function Footer() {
             </p>
             <p className="text-sm text-brand-dark/60">{clinic.legalEntity}</p>
             <p className="text-xs text-brand-dark/50">CNPJ: {clinic.cnpj}</p>
+            <p className="mt-1 max-w-xl text-xs leading-relaxed text-brand-dark/55">
+              Algumas imagens utilizadas neste site são meramente ilustrativas e podem
+              ter sido geradas ou tratadas por inteligência artificial.
+            </p>
           </div>
         </div>
       </Container>
