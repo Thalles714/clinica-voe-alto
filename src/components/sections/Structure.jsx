@@ -6,34 +6,34 @@ import { locationUrl } from '../../data/clinic'
 
 const galleryItems = [
   {
-    title: 'Fachada da clínica',
-    description: 'Fácil de encontrar e pronta para receber você.',
+    title: 'Acolher',
+    description: 'Um lugar para chegar com tranquilidade e se sentir bem-vindo.',
     src: '/imagens/estrutura/fachada-clinica-voe-alto.jpg',
-    alt: 'Fachada da Clínica Voe Alto no St. dos Afonsos, em Aparecida de Goiânia',
+    alt: 'Ambiente ilustrativo de acolhimento da Clínica Voe Alto',
     featured: true,
     objectPosition: 'object-[center_top]',
   },
   {
-    title: 'Recepção',
-    description: 'Um primeiro contato mais calmo e organizado.',
+    title: 'Envolver',
+    description: 'Atenção próxima desde o primeiro contato com a família.',
     src: '/imagens/estrutura/recepcao-clinica-voe-alto.jpg',
-    alt: 'Recepção da Clínica Voe Alto',
+    alt: 'Ambiente ilustrativo de recepção e cuidado da Clínica Voe Alto',
     featured: false,
     objectPosition: 'object-center',
   },
   {
-    title: 'Sala infantil',
-    description: 'Espaço pensado para o cuidado com crianças.',
+    title: 'Capacitar',
+    description: 'Espaços pensados para estimular desenvolvimento e autonomia.',
     src: '/imagens/estrutura/sala-atendimento-infantil.jpg',
-    alt: 'Sala de atendimento infantil da Clínica Voe Alto',
+    alt: 'Ambiente ilustrativo de acompanhamento infantil da Clínica Voe Alto',
     featured: false,
     objectPosition: 'object-center',
   },
   {
-    title: 'Sala multidisciplinar',
-    description: 'Ambientes reservados para consultas e acompanhamento.',
+    title: 'Integrar',
+    description: 'Cuidado que une diferentes áreas em torno de cada necessidade.',
     src: '/imagens/estrutura/sala-atendimento-multidisciplinar.jpg',
-    alt: 'Sala de atendimento multidisciplinar da Clínica Voe Alto',
+    alt: 'Ambiente ilustrativo de atendimento multidisciplinar da Clínica Voe Alto',
     featured: false,
     objectPosition: 'object-center',
   },
@@ -41,8 +41,8 @@ const galleryItems = [
 
 const highlights = [
   'Localização de fácil acesso em Aparecida de Goiânia',
-  'Ambientes pensados para transmitir segurança',
-  'Espaço organizado, humano e confortável para famílias',
+  'Cuidado pensado para transmitir segurança e confiança',
+  'Uma experiência mais humana e confortável para famílias',
 ]
 
 function PinIcon() {
@@ -134,8 +134,8 @@ export default function Structure() {
       <Container className="relative z-10">
         <SectionTitle
           eyebrow="Nossa estrutura"
-          title="Um ambiente preparado para acolher com segurança e tranquilidade"
-          description="Cada espaço foi pensado para tornar a experiência mais leve, organizada e confortável para crianças, adolescentes, adultos e famílias."
+          title="Um ambiente pensado para acolher, integrar e acompanhar"
+          description="Mais do que um espaço físico, a Clínica Voe Alto busca oferecer uma experiência leve, segura e humana para crianças, adolescentes, adultos e famílias."
           eyebrowVariant="blue"
         />
 
@@ -153,7 +153,7 @@ export default function Structure() {
           <div className="relative aspect-[21/9] min-h-[11rem] sm:min-h-[13rem] lg:min-h-[15rem]">
             <img
               src="/imagens/estrutura/ambiente-acolhedor-clinica.jpg"
-              alt="Ambiente acolhedor e organizado da Clínica Voe Alto"
+              alt="Ambiente ilustrativo de cuidado e convivência da Clínica Voe Alto"
               width={1400}
               height={600}
               loading="lazy"
@@ -166,10 +166,10 @@ export default function Structure() {
             />
             <figcaption className="absolute inset-y-0 left-0 flex max-w-md flex-col justify-end p-5 sm:p-7">
               <p className="text-lg font-semibold text-brand-white sm:text-xl">
-                Ambiente preparado
+                Desenvolvimento em cada etapa
               </p>
               <p className="mt-1 text-sm leading-relaxed text-brand-white/85 sm:text-base">
-                Um espaço pensado para transmitir segurança, tranquilidade e confiança.
+                Apoio contínuo para fortalecer habilidades, autonomia e bem-estar ao longo da vida.
               </p>
             </figcaption>
           </div>

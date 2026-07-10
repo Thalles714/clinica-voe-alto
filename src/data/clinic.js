@@ -7,7 +7,7 @@ export const clinic = {
   instagramHandle: '@espaco.voealto',
   address:
     'R. Igaçaba, Q 77, lote 9, sobrado 4 - St. dos Afonsos, Aparecida de Goiânia - próximo ao Buriti Shopping - GO, 74916-270',
-  logo: '/imagens/brand/logo.svg',
+  logo: '/imagens/brand/logo-sem-fundo.png',
   cnpj: '18.697.023/0001-62',
   tagline:
     'Atendimento multidisciplinar e especializado para crianças, adolescentes, adultos e famílias.',

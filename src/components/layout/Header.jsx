@@ -30,19 +30,19 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-brand-light-gray/80 bg-brand-white/85 backdrop-blur-md">
       <Container>
-        <div className="flex h-[4.5rem] items-center justify-between gap-6 sm:h-20 lg:h-24">
+        <div className="flex h-14 items-center justify-between gap-3 sm:h-16 sm:gap-4 lg:h-[4.5rem] lg:gap-6">
           <a
             href="#inicio"
-            className="shrink-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+            className="flex max-w-[7.5rem] shrink-0 items-center rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 sm:max-w-[9rem] lg:max-w-[10.5rem]"
             aria-label={`${clinic.name}, voltar ao início`}
           >
             <img
               src={clinic.logo}
               alt={clinic.name}
-              width={160}
-              height={160}
+              width={120}
+              height={48}
               decoding="async"
-              className="h-12 w-auto object-contain sm:h-14 lg:h-16"
+              className="h-8 w-auto max-w-full object-contain object-left sm:h-9 lg:h-11"
             />
           </a>
 

@@ -69,65 +69,41 @@ body {
     linear-gradient(180deg, #ffffff 0%, #faf7f8 45%, #ffffff 100%);
 }
 
-/* Specialties marquee — continuous scroll (mobile + desktop) */
-@keyframes specialties-scroll {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
+/* Specialties marquee — JS-driven for reliable mobile/iOS motion */
 .specialties-marquee {
   position: relative;
   overflow: hidden;
-  -webkit-overflow-scrolling: touch;
 }
 
 .specialties-marquee-track {
   display: flex;
   width: max-content;
-  animation: specialties-scroll 48s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .specialties-marquee-set {
   display: flex;
   flex-shrink: 0;
-  gap: 1.25rem;
-  padding-right: 1.25rem;
+  gap: 1rem;
+  padding-inline: 0.5rem;
+  padding-right: 1rem;
 }
 
-.specialties-marquee.is-paused .specialties-marquee-track,
-.specialties-marquee:focus-within .specialties-marquee-track {
-  animation-play-state: paused;
+.specialties-marquee.is-static {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .specialties-marquee:hover .specialties-marquee-track {
-    animation-play-state: paused;
-  }
+.specialties-marquee.is-static::-webkit-scrollbar {
+  display: none;
 }
 
-@media (max-width: 767px) {
-  .specialties-marquee-track {
-    animation-duration: 42s;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .specialties-marquee {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .specialties-marquee-track {
-    animation: none !important;
-    transform: none !important;
-    -webkit-transform: none !important;
-  }
+.specialties-marquee.is-static .specialties-marquee-track {
+  will-change: auto;
+  transform: none !important;
 }
