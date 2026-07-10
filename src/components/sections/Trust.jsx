@@ -6,25 +6,25 @@ const trustItems = [
   {
     title: 'Mais de 10 anos',
     description:
-      'Uma trajetória dedicada ao cuidado, desenvolvimento e acolhimento de famílias em Goiânia.',
+      'Uma trajetória dedicada ao acompanhamento de famílias e às diferentes fases do desenvolvimento.',
     icon: YearsIcon,
   },
   {
     title: 'Equipe multidisciplinar',
     description:
-      'Profissionais de diferentes especialidades atuando de forma integrada para compreender cada necessidade.',
+      'Áreas que se complementam para compreender a necessidade e indicar o caminho mais adequado.',
     icon: TeamIcon,
   },
   {
     title: 'Atendimento humanizado',
     description:
-      'Escuta, respeito e acolhimento em todas as etapas do atendimento.',
+      'Escuta atenta e respeito em cada etapa, da primeira conversa ao acompanhamento contínuo.',
     icon: HeartIcon,
   },
   {
-    title: 'Ambiente acolhedor',
+    title: 'Ambiente preparado',
     description:
-      'Uma estrutura pensada para transmitir segurança, tranquilidade e confiança.',
+      'Espaços organizados para transmitir segurança e tranquilidade a quem chega buscando cuidado.',
     icon: HomeIcon,
   },
 ]
@@ -110,14 +110,23 @@ export default function Trust() {
   return (
     <section
       id="confianca"
-      className="bg-brand-light-gray py-16 sm:py-20 lg:py-28"
+      className="section-atmosphere-soft-gray relative overflow-hidden py-14 sm:py-20 lg:py-24"
       aria-label="Por que escolher a Voe Alto"
     >
-      <Container>
+      <div
+        className="pointer-events-none absolute -right-24 -top-16 h-72 w-72 rounded-full bg-brand-light-pink/35 blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-brand-blue/[0.05] blur-3xl"
+        aria-hidden="true"
+      />
+
+      <Container className="relative z-10">
         <SectionTitle
           eyebrow="Por que escolher a Voe Alto"
-          title="Um cuidado completo, acolhedor e especializado"
-          description="Unimos experiência, equipe multidisciplinar e um ambiente preparado para oferecer um atendimento mais humano, seguro e próximo de cada família."
+          title="Experiência, escuta e cuidado integrado"
+          description="Mais do que uma lista de especialidades: uma equipe preparada para ouvir, orientar e acompanhar cada paciente e família com clareza e respeito."
           eyebrowVariant="blue"
         />
 

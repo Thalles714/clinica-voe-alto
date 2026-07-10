@@ -11,32 +11,27 @@ const steps = [
   {
     number: 1,
     title: 'Entre em contato',
-    description:
-      'Fale com a Clínica Voe Alto pelo WhatsApp e conte brevemente o que você procura.',
+    description: 'Chame pelo WhatsApp e conte, em poucas palavras, o que você procura.',
   },
   {
     number: 2,
-    title: 'Entendemos sua necessidade',
-    description:
-      'Nossa equipe acolhe sua demanda com escuta e atenção, sem julgamentos.',
+    title: 'Conte sua necessidade',
+    description: 'A equipe escuta com atenção, sem pressão e sem julgamento.',
   },
   {
     number: 3,
-    title: 'Indicamos o melhor caminho',
-    description:
-      'A partir das informações iniciais, orientamos qual atendimento pode fazer mais sentido.',
+    title: 'Receba orientação inicial',
+    description: 'Indicamos o caminho que faz mais sentido para o seu momento.',
   },
   {
     number: 4,
-    title: 'Agendamos o atendimento',
-    description:
-      'Combinamos o melhor horário disponível para iniciar o processo com tranquilidade.',
+    title: 'Agende o atendimento',
+    description: 'Combinamos o horário disponível para começar com tranquilidade.',
   },
   {
     number: 5,
-    title: 'Acompanhamos cada etapa',
-    description:
-      'O cuidado continua com orientação, acompanhamento e atenção ao desenvolvimento do paciente.',
+    title: 'Acompanhe a evolução',
+    description: 'O cuidado segue com orientação e atenção ao desenvolvimento.',
   },
 ]
 
@@ -44,14 +39,23 @@ export default function Process() {
   return (
     <section
       id="como-funciona"
-      className="bg-brand-white py-16 sm:py-20 lg:py-28"
+      className="section-atmosphere-process relative overflow-hidden py-16 sm:py-20 lg:py-28"
       aria-label="Como funciona o atendimento"
     >
-      <Container>
+      <div
+        className="pointer-events-none absolute -left-20 top-24 h-64 w-64 rounded-full bg-brand-blue/[0.05] blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -right-16 bottom-10 h-72 w-72 rounded-full bg-brand-light-pink/30 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <Container className="relative z-10">
         <SectionTitle
           eyebrow="Como funciona"
           title="Um caminho simples para começar o cuidado certo"
-          description="Você não precisa saber exatamente qual atendimento procurar. Nossa equipe acolhe sua dúvida, entende sua necessidade e orienta o melhor próximo passo."
+          description="Você não precisa saber exatamente qual atendimento procurar. Nossa equipe acolhe sua dúvida, entende sua necessidade e orienta o próximo passo."
           eyebrowVariant="blue"
         />
 

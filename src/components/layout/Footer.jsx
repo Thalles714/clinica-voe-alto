@@ -31,19 +31,22 @@ export default function Footer() {
   const formattedPhone = formatPhone(clinic.phone)
 
   return (
-    <footer className="border-t border-brand-light-gray bg-brand-white">
-      <Container className="py-14 sm:py-16 lg:py-20">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
+    <footer className="border-t border-brand-light-pink/40 bg-brand-white">
+      <Container className="py-14 pb-20 sm:py-16 sm:pb-16 lg:py-20">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-14">
           <div className="sm:col-span-2 lg:col-span-1">
             <a
               href="#inicio"
               className="inline-block rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
-              aria-label={`${clinic.name} — voltar ao início`}
+              aria-label={`${clinic.name}, voltar ao início`}
             >
               <img
                 src={clinic.logo}
                 alt={clinic.name}
-                className="h-10 w-auto lg:h-11"
+                width={200}
+                height={200}
+                decoding="async"
+                className="h-14 w-auto object-contain sm:h-16 lg:h-[4.75rem]"
               />
             </a>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-brand-dark/70">
@@ -55,7 +58,7 @@ export default function Footer() {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-dark">
               Navegação
             </h3>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <a
@@ -73,13 +76,13 @@ export default function Footer() {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-dark">
               Contato
             </h3>
-            <ul className="space-y-3 text-sm text-brand-dark/75">
+            <ul className="space-y-3.5 text-sm">
               <li>
                 <a
                   href={whatsappUrl()}
                   target="_blank"
                   rel="noreferrer"
-                  className="transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  className="font-medium text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
                   aria-label={`WhatsApp ${formattedPhone}`}
                 >
                   WhatsApp: {formattedPhone}
@@ -90,7 +93,7 @@ export default function Footer() {
                   href={clinic.instagram}
                   target="_blank"
                   rel="noreferrer"
-                  className="transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  className="font-medium text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
                   aria-label={`Instagram ${clinic.instagramHandle}`}
                 >
                   Instagram: {clinic.instagramHandle}
@@ -101,7 +104,7 @@ export default function Footer() {
                   href={locationUrl()}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 font-medium text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  className="inline-flex items-center gap-2 font-semibold text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
                   aria-label="Ver localização da Clínica Voe Alto no Google Maps"
                 >
                   <PinIcon />
@@ -115,7 +118,7 @@ export default function Footer() {
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-dark">
               Funcionamento
             </h3>
-            <ul className="space-y-2.5 text-sm text-brand-dark/75">
+            <ul className="space-y-3 text-sm text-brand-dark/75">
               {clinic.schedule.map((item) => (
                 <li key={item.label}>
                   <span className="font-medium text-brand-dark/85">{item.label}: </span>
@@ -126,8 +129,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-brand-light-gray pt-8">
-          <div className="flex flex-col items-center gap-3 text-center sm:items-start sm:text-left">
+        <div className="mt-12 border-t border-brand-light-pink/40 pt-8">
+          <div className="flex flex-col items-center gap-2.5 text-center sm:items-start sm:text-left">
             <p className="text-sm text-brand-dark/70">
               © {currentYear} {clinic.name}. Todos os direitos reservados.
             </p>

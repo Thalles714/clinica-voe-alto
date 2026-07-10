@@ -1,19 +1,18 @@
 import Container from '../ui/Container'
 import Button from '../ui/Button'
 import Badge from '../ui/Badge'
-import { clinic, whatsappUrl, locationUrl } from '../../data/clinic'
+import { whatsappUrl, locationUrl } from '../../data/clinic'
 
 const benefits = [
   'Atendimento infantil, adolescente e adulto',
   'Equipe multidisciplinar',
   'Mais de 10 anos de atuação',
-  'Agendamento pelo WhatsApp',
+  'Orientação pelo WhatsApp',
 ]
 
 const trustCards = [
-  { label: '+10 anos', position: 'top-6 right-4 sm:right-6' },
-  { label: 'Equipe multidisciplinar', position: 'bottom-20 left-4 sm:left-6' },
-  { label: 'Atendimento humanizado', position: 'bottom-6 right-4 sm:right-8' },
+  { label: '+10 anos', position: 'left-4 top-4 sm:left-5 sm:top-5' },
+  { label: 'Equipe multidisciplinar', position: 'bottom-4 left-4 sm:bottom-5 sm:left-5' },
 ]
 
 function CheckIcon() {
@@ -38,57 +37,39 @@ function HeroVisual() {
   return (
     <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
       <div
-        className="pointer-events-none absolute -right-8 top-10 h-48 w-48 rounded-full bg-brand-light-pink/50 blur-3xl"
+        className="pointer-events-none absolute -right-8 top-10 h-40 w-40 rounded-full bg-brand-light-pink/40 blur-3xl"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -left-6 bottom-8 h-40 w-40 rounded-full bg-brand-blue/10 blur-3xl"
+        className="pointer-events-none absolute -left-6 bottom-8 h-32 w-32 rounded-full bg-brand-blue/10 blur-3xl"
         aria-hidden="true"
       />
 
-      <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-brand-light-pink/60 bg-gradient-to-br from-brand-light-pink/50 via-brand-white to-brand-blue/5 shadow-xl shadow-brand-dark/5 sm:aspect-square lg:aspect-[4/5]">
-        <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(241,205,219,0.45),transparent_55%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(31,61,113,0.08),transparent_50%)]"
-          aria-hidden="true"
-        />
-
-        <div className="absolute inset-0 flex items-center justify-center p-8">
-          <div className="flex flex-col items-center gap-4 text-center">
-            <div className="rounded-3xl border border-brand-white/80 bg-brand-white/70 p-6 shadow-lg shadow-brand-dark/5 backdrop-blur-sm">
-              <img
-                src={clinic.logo}
-                alt=""
-                aria-hidden="true"
-                className="mx-auto h-16 w-auto opacity-90 sm:h-20"
-              />
-            </div>
-            <p className="max-w-[14rem] text-sm font-medium leading-relaxed text-brand-dark/60">
-              Espaço acolhedor para o desenvolvimento integral
-            </p>
-          </div>
+      <div className="relative overflow-hidden rounded-[1.75rem] border border-brand-light-pink/40 bg-brand-light-gray shadow-xl shadow-brand-dark/10 sm:rounded-[2rem]">
+        <div className="relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5]">
+          <img
+            src="/imagens/hero/hero-clinica-voe-alto.jpg"
+            alt="Ambiente acolhedor da Clínica Voe Alto em Aparecida de Goiânia"
+            width={800}
+            height={1000}
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-brand-blue/40 via-brand-dark/10 to-brand-dark/5"
+            aria-hidden="true"
+          />
         </div>
 
         {trustCards.map((card) => (
           <div
             key={card.label}
-            className={`absolute ${card.position} rounded-2xl border border-brand-white/90 bg-brand-white/90 px-4 py-2.5 text-xs font-semibold text-brand-blue shadow-lg shadow-brand-dark/5 backdrop-blur-sm sm:text-sm`}
+            className={`absolute ${card.position} rounded-2xl border border-brand-white/90 bg-brand-white/95 px-3 py-2 text-xs font-semibold text-brand-blue shadow-md shadow-brand-dark/10 backdrop-blur-sm sm:px-3.5 sm:text-sm`}
           >
             {card.label}
           </div>
         ))}
-
-        <div
-          className="absolute left-1/2 top-1/4 h-24 w-24 -translate-x-1/2 rounded-full border border-brand-light-pink/40 bg-brand-light-pink/20"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute bottom-1/3 right-1/4 h-16 w-16 rounded-2xl border border-brand-blue/10 bg-brand-blue/5"
-          aria-hidden="true"
-        />
       </div>
     </div>
   )
@@ -98,40 +79,44 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative overflow-hidden bg-brand-white pt-8 pb-16 sm:pt-12 sm:pb-20 lg:pb-28"
+      className="section-atmosphere-hero relative overflow-hidden pt-6 pb-12 sm:pt-10 sm:pb-16 lg:pb-20"
     >
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-brand-light-pink/25 to-transparent"
+        className="pointer-events-none absolute -right-16 top-24 h-72 w-72 rounded-full bg-brand-blue/[0.06] blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-brand-light-pink/30 blur-3xl"
         aria-hidden="true"
       />
 
-      <Container className="relative">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+      <Container className="relative z-10">
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           <div className="max-w-xl">
-            <Badge variant="blue">Clínica multidisciplinar em Goiânia</Badge>
+            <Badge variant="blue">Clínica multidisciplinar em Aparecida de Goiânia</Badge>
 
-            <h1 className="mt-6 text-4xl font-bold leading-[1.12] tracking-tight text-brand-dark sm:text-5xl lg:text-[3.25rem]">
-              Cuidado especializado para o desenvolvimento de crianças, adolescentes e
-              adultos
+            <h1 className="mt-5 text-[2rem] font-bold leading-[1.15] tracking-tight text-brand-dark sm:mt-6 sm:text-5xl lg:text-[3.15rem]">
+              Cuidado multidisciplinar para cada fase do desenvolvimento
             </h1>
 
-            <p className="mt-6 text-lg leading-relaxed text-brand-dark/70">
-              Atendimento acolhedor e multidisciplinar para apoiar cada etapa do
-              desenvolvimento emocional, cognitivo, comportamental e educacional.
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-brand-dark/70 sm:mt-6 sm:text-lg">
+              Atendimento para compreender necessidades emocionais, cognitivas,
+              comportamentais, educacionais e familiares, e orientar o melhor caminho
+              de acompanhamento para crianças, adolescentes, adultos e famílias.
             </p>
 
-            <ul className="mt-8 space-y-3.5" aria-label="Diferenciais da clínica">
+            <ul className="mt-6 space-y-3 sm:mt-7" aria-label="Diferenciais da clínica">
               {benefits.map((benefit) => (
                 <li key={benefit} className="flex items-start gap-3">
                   <CheckIcon />
-                  <span className="text-base leading-relaxed text-brand-dark/80">
+                  <span className="text-sm leading-relaxed text-brand-dark/80 sm:text-base">
                     {benefit}
                   </span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4">
               <Button
                 href={whatsappUrl()}
                 variant="primary"

@@ -1,99 +1,81 @@
 export const specialties = [
   {
-    title: 'Psicologia Infantil',
-    category: 'Psicologia',
+    title: 'Neuropsicopedagogia',
+    category: 'Aprendizagem',
     description:
-      'Apoio emocional e comportamental para crianças em diferentes fases do desenvolvimento.',
-    audience: 'Crianças',
-    tags: ['Emoções', 'Comportamento', 'Desenvolvimento'],
-  },
-  {
-    title: 'Psicologia para Adolescentes',
-    category: 'Psicologia',
-    description:
-      'Acompanhamento para adolescentes em momentos de mudanças emocionais, sociais e escolares.',
-    audience: 'Adolescentes',
-    tags: ['Autoestima', 'Ansiedade', 'Relações'],
-  },
-  {
-    title: 'Psicologia para Adultos',
-    category: 'Psicologia',
-    description:
-      'Suporte psicológico para adultos que buscam equilíbrio emocional, clareza e bem-estar.',
-    audience: 'Adultos',
-    tags: ['Saúde mental', 'Autoconhecimento', 'Bem-estar'],
+      'Une neurociência e aprendizagem para apoiar o desenvolvimento cognitivo e escolar.',
   },
   {
     title: 'Psicopedagogia',
     category: 'Aprendizagem',
     description:
-      'Intervenção nas dificuldades de aprendizagem com foco no processo educacional da criança.',
-    audience: 'Crianças e adolescentes',
-    tags: ['Aprendizagem', 'Escola', 'Desenvolvimento'],
+      'Avaliação e acompanhamento das dificuldades de aprendizagem com olhar individualizado.',
   },
   {
-    title: 'Neuropsicopedagogia',
-    category: 'Aprendizagem',
+    title: 'Terapia ABA',
+    category: 'Intervenção',
     description:
-      'Integração entre neurociência e pedagogia para compreender e apoiar o aprendizado.',
-    audience: 'Crianças e adolescentes',
-    tags: ['Cognição', 'Aprendizagem', 'Neurodesenvolvimento'],
+      'Intervenção estruturada para desenvolver habilidades, autonomia e participação no dia a dia.',
   },
   {
-    title: 'Avaliação Neuropsicológica',
-    category: 'Neuropsicologia',
+    title: 'Psicologia TCC',
+    category: 'Psicologia',
     description:
-      'Investigação detalhada das funções cognitivas para orientar diagnóstico e intervenção.',
-    audience: 'Todas as idades',
-    tags: ['Avaliação', 'Cognição', 'Diagnóstico'],
+      'Acompanhamento baseado na Terapia Cognitivo-Comportamental para equilíbrio emocional.',
   },
   {
-    title: 'Reabilitação Neuropsicológica',
-    category: 'Neuropsicologia',
+    title: 'Acompanhamento Jurídico',
+    category: 'Suporte',
     description:
-      'Programas de estimulação e reabilitação cognitiva adaptados às necessidades de cada paciente.',
-    audience: 'Todas as idades',
-    tags: ['Reabilitação', 'Cognição', 'Intervenção'],
-  },
-  {
-    title: 'Neurologia',
-    category: 'Neurologia',
-    description:
-      'Avaliação e acompanhamento neurológico para identificar e tratar alterações do sistema nervoso.',
-    audience: 'Todas as idades',
-    tags: ['Neurologia', 'Diagnóstico', 'Acompanhamento'],
+      'Orientação para famílias que precisam de suporte em direitos e inclusão.',
   },
   {
     title: 'Fonoaudiologia',
     category: 'Comunicação',
     description:
-      'Desenvolvimento da fala, linguagem, audição e funções relacionadas à comunicação.',
-    audience: 'Crianças e adultos',
-    tags: ['Fala', 'Linguagem', 'Comunicação'],
+      'Cuidado com comunicação, linguagem, fala, voz, audição e deglutição.',
   },
   {
-    title: 'Terapia Ocupacional',
+    title: 'Avaliação Neuropsicológica',
+    category: 'Avaliação',
+    description:
+      'Avalia funções cognitivas, emocionais e comportamentais para orientar o acompanhamento.',
+  },
+  {
+    title: 'Neurologia',
+    category: 'Saúde',
+    description:
+      'Avaliação e acompanhamento neurológico integrado ao cuidado multidisciplinar.',
+  },
+  {
+    title: 'Pediatria do Comportamento Infantil',
+    category: 'Infantil',
+    description:
+      'Olhar pediátrico para o desenvolvimento e o comportamento na infância.',
+  },
+  {
+    title: 'Massagem Terapêutica',
+    category: 'Bem-estar',
+    description:
+      'Técnicas que favorecem relaxamento, alívio de tensões e bem-estar.',
+  },
+  {
+    title: 'Grupo de Apoio a Mães',
+    category: 'Acolhimento',
+    description:
+      'Espaço de escuta e troca para quem cuida e precisa de suporte no dia a dia.',
+  },
+  {
+    title: 'Atividades da Vida Diária para Adolescentes',
+    category: 'Autonomia',
+    description:
+      'Práticas que fortalecem autonomia, rotina e habilidades do cotidiano.',
+  },
+  {
+    title: 'Oficinas',
     category: 'Desenvolvimento',
     description:
-      'Promoção da autonomia e independência nas atividades do dia a dia e no desenvolvimento motor.',
-    audience: 'Crianças e adultos',
-    tags: ['Autonomia', 'Motricidade', 'Rotina'],
-  },
-  {
-    title: 'Musicoterapia',
-    category: 'Terapias integrativas',
-    description:
-      'Uso da música como recurso terapêutico para expressão, regulação emocional e desenvolvimento.',
-    audience: 'Todas as idades',
-    tags: ['Música', 'Expressão', 'Regulação'],
-  },
-  {
-    title: 'Psicomotricidade',
-    category: 'Desenvolvimento',
-    description:
-      'Integração entre corpo, movimento e emoção para favorecer o desenvolvimento global.',
-    audience: 'Crianças',
-    tags: ['Movimento', 'Corpo', 'Desenvolvimento'],
+      'Atividades que estimulam habilidades sociais, motoras, cognitivas e emocionais.',
   },
 ]
 

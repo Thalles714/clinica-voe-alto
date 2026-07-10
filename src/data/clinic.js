@@ -6,11 +6,11 @@ export const clinic = {
   instagram: 'https://www.instagram.com/espaco.voealto/',
   instagramHandle: '@espaco.voealto',
   address:
-    'Rua 101, nº 387, Quadra F-17, Lote 43, Setor Sul, Goiânia - GO',
+    'Rua 101, nº 387, Quadra F-17, Lote 43, Setor Sul, Aparecida de Goiânia - GO',
   logo: '/imagens/brand/logo.svg',
   cnpj: '18.697.023/0001-62',
   tagline:
-    'Atendimento multidisciplinar, acolhedor e especializado para crianças, adolescentes, adultos e famílias em Goiânia.',
+    'Atendimento multidisciplinar e especializado para crianças, adolescentes, adultos e famílias.',
   schedule: [
     { label: 'Segunda a sexta', value: '08h às 11h e 13h às 18h' },
     { label: 'Sábado', value: '08h às 11h' },
@@ -38,6 +38,5 @@ export function whatsappUrl(message = whatsappBookingMessage) {
 }
 
 export function locationUrl() {
-  const query = encodeURIComponent(clinic.address)
-  return `https://www.google.com/maps/search/?api=1&query=${query}`
+  return 'https://maps.app.goo.gl/BsUns757PDx22H2c9'
 }

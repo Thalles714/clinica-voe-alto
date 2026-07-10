@@ -1,0 +1,160 @@
+import { useState } from 'react'
+import Button from './Button'
+import { whatsappUrl } from '../../data/clinic'
+
+const options = [
+  {
+    id: 'crianca',
+    label: 'Atendimento para criança',
+    reply:
+      'Entendi. Podemos ajudar a orientar o acompanhamento infantil. No WhatsApp, a equipe ouve sua necessidade e indica o próximo passo, sem diagnóstico automático por aqui.',
+    whatsappMessage:
+      'Olá, gostaria de informações sobre atendimento infantil na Clínica Voe Alto.',
+  },
+  {
+    id: 'adolescente',
+    label: 'Atendimento para adolescente',
+    reply:
+      'Certo. A adolescência pode trazer mudanças emocionais, escolares e sociais. A equipe pode orientar o caminho de atendimento mais adequado para esse momento.',
+    whatsappMessage:
+      'Olá, gostaria de informações sobre atendimento para adolescentes na Clínica Voe Alto.',
+  },
+  {
+    id: 'adulto',
+    label: 'Atendimento para adulto',
+    reply:
+      'Entendi. Também acompanhamos adultos que buscam cuidado emocional, bem-estar e orientação. A conversa pelo WhatsApp ajuda a definir o próximo passo.',
+    whatsappMessage:
+      'Olá, gostaria de informações sobre atendimento para adultos na Clínica Voe Alto.',
+  },
+  {
+    id: 'especialidades',
+    label: 'Tenho dúvidas sobre especialidades',
+    reply:
+      'Não tem problema se você ainda não sabe qual especialidade procurar. Conte o que está acontecendo pelo WhatsApp. A equipe orienta o caminho mais adequado.',
+    whatsappMessage:
+      'Olá, gostaria de ajuda para entender qual especialidade procurar na Clínica Voe Alto.',
+  },
+  {
+    id: 'agendar',
+    label: 'Quero agendar uma avaliação',
+    reply:
+      'Perfeito. Continue no WhatsApp para falar com a equipe, verificar disponibilidade e combinar o agendamento.',
+    whatsappMessage:
+      'Olá, gostaria de agendar uma avaliação na Clínica Voe Alto.',
+  },
+]
+
+const initialMessage =
+  'Olá! Posso te ajudar a iniciar o contato com a Clínica Voe Alto. Escolha uma opção para que a equipe entenda melhor sua necessidade pelo WhatsApp.'
+
+function ChatIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-4 w-4"
+      aria-hidden="true"
+    >
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+  )
+}
+
+export default function AssistantChat() {
+  const [selectedId, setSelectedId] = useState(null)
+  const selected = options.find((option) => option.id === selectedId) ?? null
+
+  return (
+    <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+      <div
+        className="pointer-events-none absolute -right-4 top-0 h-32 w-32 rounded-full bg-brand-pink/20 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div className="relative flex flex-col overflow-hidden rounded-3xl border border-brand-white/25 bg-brand-white shadow-xl shadow-brand-dark/15">
+        <div className="flex items-start gap-3 border-b border-brand-light-gray px-5 py-4 sm:px-6">
+          <div
+            className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-light-pink/70 text-brand-blue"
+            aria-hidden="true"
+          >
+            <ChatIcon />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-brand-dark sm:text-base">
+              Assistente de orientação
+            </p>
+            <p className="mt-0.5 text-xs leading-relaxed text-brand-dark/60 sm:text-sm">
+              Escolha uma opção e continue pelo WhatsApp.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-1 flex-col gap-3 px-4 py-4 sm:px-5 sm:py-5">
+          <div className="max-w-[92%] rounded-2xl rounded-tl-md bg-brand-light-gray px-3.5 py-3 text-sm leading-relaxed text-brand-dark/85">
+            {initialMessage}
+          </div>
+
+          {selected && (
+            <>
+              <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-brand-light-pink px-3.5 py-3 text-sm font-medium leading-relaxed text-brand-dark">
+                {selected.label}
+              </div>
+              <div className="max-w-[92%] rounded-2xl rounded-tl-md bg-brand-light-gray px-3.5 py-3 text-sm leading-relaxed text-brand-dark/85">
+                {selected.reply}
+              </div>
+            </>
+          )}
+
+          {!selected ? (
+            <div className="mt-1 flex flex-col gap-2" role="group" aria-label="Opções de orientação">
+              {options.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => setSelectedId(option.id)}
+                  className="rounded-2xl border border-brand-light-pink/70 bg-brand-white px-3.5 py-2.5 text-left text-sm font-medium text-brand-dark transition-all duration-200 hover:border-brand-pink hover:bg-brand-light-pink/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  aria-label={`Selecionar: ${option.label}`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-2 flex flex-col gap-2.5">
+              <Button
+                href={whatsappUrl(selected.whatsappMessage)}
+                variant="primary"
+                size="md"
+                className="w-full"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Continuar no WhatsApp: ${selected.label}`}
+              >
+                Continuar no WhatsApp
+              </Button>
+              <button
+                type="button"
+                onClick={() => setSelectedId(null)}
+                className="rounded-xl px-3 py-2 text-sm font-medium text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                aria-label="Escolher outra opção"
+              >
+                Escolher outra opção
+              </button>
+            </div>
+          )}
+        </div>
+
+        <p className="border-t border-brand-light-gray px-4 py-3 text-center text-[11px] leading-relaxed text-brand-dark/50 sm:px-5 sm:text-xs">
+          Este assistente apenas facilita o primeiro contato. A orientação será feita pela
+          equipe da clínica.
+        </p>
+      </div>
+    </div>
+  )
+}

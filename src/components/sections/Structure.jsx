@@ -7,46 +7,43 @@ import { locationUrl } from '../../data/clinic'
 const galleryItems = [
   {
     title: 'Fachada da clínica',
-    description: 'Entrada acolhedora e de fácil identificação.',
-    variant: 'facade',
+    description: 'Fácil de encontrar e pronta para receber você.',
+    src: '/imagens/estrutura/fachada-clinica-voe-alto.jpg',
+    alt: 'Fachada da Clínica Voe Alto no Setor Sul, em Aparecida de Goiânia',
     featured: true,
+    objectPosition: 'object-[center_top]',
   },
   {
-    title: 'Recepção acolhedora',
-    description: 'Ambiente leve para receber famílias com tranquilidade.',
-    variant: 'reception',
+    title: 'Recepção',
+    description: 'Um primeiro contato mais calmo e organizado.',
+    src: '/imagens/estrutura/recepcao-clinica-voe-alto.jpg',
+    alt: 'Recepção da Clínica Voe Alto',
     featured: false,
+    objectPosition: 'object-center',
   },
   {
-    title: 'Salas de atendimento',
-    description: 'Espaços reservados para consultas e acompanhamentos.',
-    variant: 'rooms',
+    title: 'Sala infantil',
+    description: 'Espaço pensado para o cuidado com crianças.',
+    src: '/imagens/estrutura/sala-atendimento-infantil.jpg',
+    alt: 'Sala de atendimento infantil da Clínica Voe Alto',
     featured: false,
+    objectPosition: 'object-center',
   },
   {
-    title: 'Espaços preparados para diferentes fases do desenvolvimento',
-    description: 'Áreas adaptadas para crianças, adolescentes e adultos.',
-    variant: 'spaces',
+    title: 'Sala multidisciplinar',
+    description: 'Ambientes reservados para consultas e acompanhamento.',
+    src: '/imagens/estrutura/sala-atendimento-multidisciplinar.jpg',
+    alt: 'Sala de atendimento multidisciplinar da Clínica Voe Alto',
     featured: false,
+    objectPosition: 'object-center',
   },
 ]
 
 const highlights = [
-  'Localização de fácil acesso em Goiânia',
+  'Localização de fácil acesso em Aparecida de Goiânia',
   'Ambientes pensados para transmitir segurança',
-  'Atendimento em um espaço humano, organizado e acolhedor',
+  'Espaço organizado, humano e confortável para famílias',
 ]
-
-const placeholderStyles = {
-  facade:
-    'from-brand-blue/15 via-brand-light-pink/40 to-brand-white',
-  reception:
-    'from-brand-light-pink/60 via-brand-white to-brand-blue/5',
-  rooms:
-    'from-brand-white via-brand-light-pink/35 to-brand-blue/10',
-  spaces:
-    'from-brand-blue/8 via-brand-light-pink/45 to-brand-white',
-}
 
 function PinIcon() {
   return (
@@ -85,35 +82,41 @@ function CheckIcon() {
   )
 }
 
-function GalleryPlaceholder({ title, description, variant, featured = false }) {
+function GalleryImage({
+  title,
+  description,
+  src,
+  alt,
+  featured = false,
+  objectPosition = 'object-center',
+  priority = false,
+}) {
   return (
     <figure
       className={[
-        'group relative overflow-hidden rounded-3xl border border-brand-light-pink/50 bg-gradient-to-br shadow-md shadow-brand-dark/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-dark/8',
-        placeholderStyles[variant],
-        featured ? 'aspect-[4/5] min-h-[22rem] lg:aspect-auto lg:min-h-[32rem]' : 'aspect-[5/4] min-h-[10rem]',
+        'group relative overflow-hidden rounded-3xl border border-brand-light-pink/40 bg-brand-light-gray shadow-md shadow-brand-dark/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-dark/10',
+        featured
+          ? 'aspect-[4/5] lg:aspect-auto lg:h-full lg:min-h-[28rem]'
+          : 'aspect-[16/10] lg:aspect-[16/10]',
       ].join(' ')}
     >
-      <div
-        className="pointer-events-none absolute -right-6 -top-6 h-32 w-32 rounded-full bg-brand-white/40 blur-2xl"
-        aria-hidden="true"
+      <img
+        src={src}
+        alt={alt}
+        width={featured ? 900 : 700}
+        height={featured ? 1125 : 440}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
+        className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] ${objectPosition}`}
       />
       <div
-        className="pointer-events-none absolute -bottom-4 -left-4 h-24 w-24 rounded-full bg-brand-blue/10 blur-xl"
+        className="absolute inset-0 bg-gradient-to-t from-brand-dark/55 via-brand-dark/10 to-transparent"
         aria-hidden="true"
       />
-
-      <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
-        <figcaption>
-          <p className="text-base font-semibold text-brand-dark sm:text-lg">{title}</p>
-          <p className="mt-1 text-sm leading-relaxed text-brand-dark/65">{description}</p>
-          <p className="mt-3 text-xs font-medium uppercase tracking-wider text-brand-blue/70">
-            Foto em breve
-          </p>
-        </figcaption>
-      </div>
-
-      <span className="sr-only">{title}</span>
+      <figcaption className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        <p className="text-base font-semibold text-brand-white sm:text-lg">{title}</p>
+        <p className="mt-1 text-sm leading-relaxed text-brand-white/85">{description}</p>
+      </figcaption>
     </figure>
   )
 }
@@ -125,47 +128,63 @@ export default function Structure() {
   return (
     <section
       id="estrutura"
-      className="bg-brand-light-gray py-16 sm:py-20 lg:py-28"
+      className="section-atmosphere-soft-gray relative overflow-hidden py-14 sm:py-20 lg:py-24"
       aria-label="Estrutura da clínica"
     >
-      <Container>
+      <Container className="relative z-10">
         <SectionTitle
-          eyebrow="Estrutura acolhedora"
+          eyebrow="Nossa estrutura"
           title="Um ambiente preparado para acolher com segurança e tranquilidade"
-          description="Cada detalhe da Clínica Voe Alto foi pensado para oferecer uma experiência mais leve, humana e confortável para crianças, adolescentes, adultos e famílias."
+          description="Cada espaço foi pensado para tornar a experiência mais leve, organizada e confortável para crianças, adolescentes, adultos e famílias."
           eyebrowVariant="blue"
         />
 
-        <div className="grid gap-5 lg:grid-cols-2 lg:gap-6">
-          <GalleryPlaceholder
-            title={featured.title}
-            description={featured.description}
-            variant={featured.variant}
-            featured
-          />
+        <div className="grid gap-4 lg:grid-cols-2 lg:items-stretch lg:gap-5">
+          <GalleryImage {...featured} priority />
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1 lg:gap-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             {secondary.map((item) => (
-              <GalleryPlaceholder
-                key={item.title}
-                title={item.title}
-                description={item.description}
-                variant={item.variant}
-              />
+              <GalleryImage key={item.title} {...item} />
             ))}
           </div>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-3 sm:gap-5 lg:mt-12">
+        <figure className="group relative mt-4 overflow-hidden rounded-3xl border border-brand-light-pink/40 bg-brand-light-gray shadow-md shadow-brand-dark/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-dark/10 sm:mt-5">
+          <div className="relative aspect-[21/9] min-h-[11rem] sm:min-h-[13rem] lg:min-h-[15rem]">
+            <img
+              src="/imagens/estrutura/ambiente-acolhedor-clinica.jpg"
+              alt="Ambiente acolhedor e organizado da Clínica Voe Alto"
+              width={1400}
+              height={600}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-r from-brand-dark/50 via-brand-dark/20 to-transparent"
+              aria-hidden="true"
+            />
+            <figcaption className="absolute inset-y-0 left-0 flex max-w-md flex-col justify-end p-5 sm:p-7">
+              <p className="text-lg font-semibold text-brand-white sm:text-xl">
+                Ambiente preparado
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-brand-white/85 sm:text-base">
+                Um espaço pensado para transmitir segurança, tranquilidade e confiança.
+              </p>
+            </figcaption>
+          </div>
+        </figure>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-3 sm:gap-5 lg:mt-10">
           {highlights.map((text) => (
-            <Card key={text} hover className="flex items-start gap-3 p-5 sm:p-6">
+            <Card key={text} hover className="flex h-full items-start gap-3 p-5 sm:p-6">
               <CheckIcon />
               <p className="text-sm leading-relaxed text-brand-dark/80 sm:text-base">{text}</p>
             </Card>
           ))}
         </div>
 
-        <div className="mt-10 flex justify-center lg:mt-12">
+        <div className="mt-8 flex justify-center lg:mt-10">
           <Button
             href={locationUrl()}
             variant="secondary"
