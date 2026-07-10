@@ -116,7 +116,7 @@ export default function Audience() {
             rel="noopener noreferrer"
             aria-label="Conversar com a Clínica Voe Alto pelo WhatsApp"
           >
-            Conversar com a Clínica Voe Alto
+            Conversar pelo WhatsApp
           </Button>
         </div>
       </Container>
