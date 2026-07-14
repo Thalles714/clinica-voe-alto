@@ -16,6 +16,8 @@ const CLICKABLE_SELECTOR = [
 let audioContext = null
 let clickBuffer = null
 let loadPromise = null
+let unlocked = false
+let htmlAudio = null
 
 function getAudioContext() {
   if (audioContext) return audioContext
@@ -25,6 +27,15 @@ function getAudioContext() {
   return audioContext
 }
 
+function getHtmlAudio() {
+  if (htmlAudio) return htmlAudio
+  htmlAudio = new Audio(CLICK_SOUND_URL)
+  htmlAudio.preload = 'auto'
+  htmlAudio.setAttribute('playsinline', '')
+  htmlAudio.volume = 0.9
+  return htmlAudio
+}
+
 function loadClickBuffer() {
   if (clickBuffer) return Promise.resolve(clickBuffer)
   if (loadPromise) return loadPromise
@@ -32,7 +43,7 @@ function loadClickBuffer() {
   const ctx = getAudioContext()
   if (!ctx) return Promise.reject(new Error('Web Audio unavailable'))
 
-  loadPromise = fetch(CLICK_SOUND_URL)
+  loadPromise = fetch(CLICK_SOUND_URL, { cache: 'force-cache' })
     .then((response) => {
       if (!response.ok) throw new Error(`Click sound HTTP ${response.status}`)
       return response.arrayBuffer()
@@ -50,43 +61,69 @@ function loadClickBuffer() {
   return loadPromise
 }
 
-async function unlockAudio() {
+function unlockAudioFromGesture() {
   const ctx = getAudioContext()
-  if (!ctx) return
-  if (ctx.state === 'suspended') {
-    try {
-      await ctx.resume()
-    } catch {
-      /* autoplay policy */
-    }
-  }
+  if (!ctx) return Promise.resolve(false)
+
+  const resume =
+    ctx.state === 'suspended' || ctx.state === 'interrupted'
+      ? ctx.resume()
+      : Promise.resolve()
+
+  return resume
+    .then(() => {
+      if (!unlocked && ctx.state === 'running') {
+        try {
+          const silence = ctx.createBuffer(1, 1, ctx.sampleRate || 22050)
+          const source = ctx.createBufferSource()
+          source.buffer = silence
+          source.connect(ctx.destination)
+          source.start(0)
+        } catch {
+          /* ignore */
+        }
+        unlocked = true
+      }
+      // Warm HTMLAudio unlock in the same gesture (iOS / some Android).
+      try {
+        const audio = getHtmlAudio()
+        audio.muted = true
+        const playPromise = audio.play()
+        if (playPromise?.then) {
+          playPromise
+            .then(() => {
+              audio.pause()
+              audio.currentTime = 0
+              audio.muted = false
+            })
+            .catch(() => {
+              audio.muted = false
+            })
+        } else {
+          audio.muted = false
+        }
+      } catch {
+        /* ignore */
+      }
+      return ctx.state === 'running'
+    })
+    .catch(() => false)
 }
 
-/**
- * Plays one click sample immediately. Each call spawns a fresh BufferSource so
- * rapid clicks overlap instead of truncating the previous play.
- */
-export function playClickSound() {
+function playBufferedClick() {
   const ctx = getAudioContext()
-  if (!ctx) return
+  if (!ctx || !clickBuffer || ctx.state !== 'running') return false
 
-  const trigger = () => {
-    if (!clickBuffer) return
-    if (ctx.state === 'suspended') {
-      ctx.resume().catch(() => {})
-    }
-
+  try {
     const source = ctx.createBufferSource()
     source.buffer = clickBuffer
-
     const gain = ctx.createGain()
-    // Keep sharp attack; short soft release avoids abrupt cutoff if buffer ends hard.
-    const now = ctx.currentTime
-    gain.gain.setValueAtTime(0.72, now)
-
+    const isCoarse =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(pointer: coarse)').matches
+    gain.gain.setValueAtTime(isCoarse ? 0.95 : 0.72, ctx.currentTime)
     source.connect(gain)
     gain.connect(ctx.destination)
-    // start(0) schedules ASAP relative to the audio clock — stacks freely on spam-clicks.
     source.start(0)
     source.onended = () => {
       try {
@@ -96,94 +133,164 @@ export function playClickSound() {
         /* already disconnected */
       }
     }
+    return true
+  } catch {
+    return false
   }
-
-  if (clickBuffer) {
-    trigger()
-    return
-  }
-
-  loadClickBuffer().then(trigger).catch(() => {})
 }
 
-function isClickableTarget(target) {
-  if (!(target instanceof Element)) return false
-  const el = target.closest(CLICKABLE_SELECTOR)
-  if (!el) return false
-  if (el.closest('[data-no-click-sound]')) return false
-  return el
+function playHtmlClick() {
+  try {
+    const audio = getHtmlAudio()
+    audio.muted = false
+    audio.currentTime = 0
+    const playPromise = audio.play()
+    if (playPromise?.catch) playPromise.catch(() => {})
+    return true
+  } catch {
+    return false
+  }
 }
 
 /**
- * Global delegation: one listener, Web Audio overlap, keyboard + pointer support.
+ * Plays one click sample. Call from a real user gesture on mobile.
+ */
+export function playClickSound() {
+  const ctx = getAudioContext()
+
+  const finish = () => {
+    if (playBufferedClick()) return
+    playHtmlClick()
+  }
+
+  const afterReady = () => {
+    if (clickBuffer) {
+      finish()
+      return
+    }
+    loadClickBuffer()
+      .then(finish)
+      .catch(() => {
+        playHtmlClick()
+      })
+  }
+
+  if (!ctx) {
+    playHtmlClick()
+    return
+  }
+
+  unlockAudioFromGesture().then(() => afterReady())
+}
+
+function isClickableTarget(target) {
+  if (!(target instanceof Element) && !(target instanceof Text)) return false
+  const el =
+    target instanceof Element
+      ? target
+      : target.parentElement
+  if (!(el instanceof Element)) return false
+  const hit = el.closest(CLICKABLE_SELECTOR)
+  if (!hit) return false
+  if (hit.closest('[data-no-click-sound]')) return false
+  return hit
+}
+
+function shouldIgnoreMouse(event) {
+  return event.pointerType === 'mouse' && event.button !== 0
+}
+
+/**
+ * Global delegation for keyboard + pointer/touch activation.
  */
 export function initGlobalClickSound() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return () => {}
 
-  const prefersReducedMotion = () =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-  const prefersReducedData = () => {
-    try {
-      return Boolean(navigator.connection?.saveData)
-    } catch {
-      return false
-    }
+  // Click sound is intentional UI feedback — do not disable for reduced motion.
+  try {
+    if (navigator.connection?.saveData) return () => {}
+  } catch {
+    /* ignore */
   }
 
-  if (prefersReducedMotion() || prefersReducedData()) {
-    return () => {}
-  }
-
-  // Warm decode ASAP so the first real click is low-latency.
-  const warm = () => {
-    unlockAudio().finally(() => {
+  const warmFromGesture = () => {
+    unlockAudioFromGesture().finally(() => {
       loadClickBuffer().catch(() => {})
+      try {
+        getHtmlAudio().load()
+      } catch {
+        /* ignore */
+      }
     })
   }
 
-  const onFirstGesture = () => {
-    warm()
-    window.removeEventListener('pointerdown', onFirstGesture, true)
-    window.removeEventListener('keydown', onFirstGesture, true)
+  // Prefetch decode early (playback still needs gesture unlock).
+  loadClickBuffer().catch(() => {})
+  try {
+    getHtmlAudio().load()
+  } catch {
+    /* ignore */
   }
 
-  window.addEventListener('pointerdown', onFirstGesture, { capture: true, once: true })
-  window.addEventListener('keydown', onFirstGesture, { capture: true, once: true })
-
-  // Start network fetch early (decode may wait for context unlock).
-  loadClickBuffer().catch(() => {})
+  const onActivate = (event) => {
+    if (!isClickableTarget(event.target)) return
+    playClickSound()
+  }
 
   const onPointerDown = (event) => {
-    if (!event.isPrimary) return
-    if (event.pointerType === 'mouse' && event.button !== 0) return
-    if (!isClickableTarget(event.target)) return
-    unlockAudio()
-    playClickSound()
+    if (typeof event.isPrimary === 'boolean' && !event.isPrimary) return
+    if (shouldIgnoreMouse(event)) return
+    onActivate(event)
+  }
+
+  const onTouchStart = (event) => {
+    onActivate(event)
   }
 
   const onKeyDown = (event) => {
     if (event.repeat) return
     if (event.key !== 'Enter' && event.key !== ' ') return
-    if (!isClickableTarget(event.target)) return
-    // Space on buttons already triggers activation; play once per key press.
-    unlockAudio()
-    playClickSound()
+    onActivate(event)
   }
 
-  document.addEventListener('pointerdown', onPointerDown, { capture: true, passive: true })
+  const supportsPointer = typeof window.PointerEvent !== 'undefined'
+
+  if (supportsPointer) {
+    document.addEventListener('pointerdown', onPointerDown, { capture: true, passive: true })
+    window.addEventListener('pointerdown', warmFromGesture, {
+      capture: true,
+      once: true,
+      passive: true,
+    })
+  } else {
+    document.addEventListener('touchstart', onTouchStart, { capture: true, passive: true })
+    window.addEventListener('touchstart', warmFromGesture, {
+      capture: true,
+      once: true,
+      passive: true,
+    })
+  }
+
   document.addEventListener('keydown', onKeyDown, { capture: true })
+  window.addEventListener('keydown', warmFromGesture, { capture: true, once: true })
 
   return () => {
-    document.removeEventListener('pointerdown', onPointerDown, true)
+    if (supportsPointer) {
+      document.removeEventListener('pointerdown', onPointerDown, true)
+      window.removeEventListener('pointerdown', warmFromGesture, true)
+    } else {
+      document.removeEventListener('touchstart', onTouchStart, true)
+      window.removeEventListener('touchstart', warmFromGesture, true)
+    }
     document.removeEventListener('keydown', onKeyDown, true)
-    window.removeEventListener('pointerdown', onFirstGesture, true)
-    window.removeEventListener('keydown', onFirstGesture, true)
+    window.removeEventListener('keydown', warmFromGesture, true)
     if (audioContext) {
       audioContext.close().catch(() => {})
       audioContext = null
     }
     clickBuffer = null
     loadPromise = null
+    unlocked = false
+    htmlAudio = null
   }
 }

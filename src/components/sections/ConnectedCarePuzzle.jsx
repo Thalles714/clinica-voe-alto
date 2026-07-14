@@ -409,6 +409,25 @@ export default function ConnectedCarePuzzle() {
         <div className="connected-care__fade connected-care__fade--top" aria-hidden="true" />
         <div className="connected-care__fade connected-care__fade--bottom" aria-hidden="true" />
 
+        <div className="connected-care__scroll-hint" aria-hidden="true">
+          <span className="connected-care__scroll-hint-label">Role ou deslize para continuar</span>
+          <span className="connected-care__scroll-hint-arrow">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              focusable="false"
+            >
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
+          </span>
+        </div>
+
         <div className="connected-care__layer connected-care__layer--back" aria-hidden="true">
           {renderLayer(layers.back)}
         </div>
@@ -441,25 +460,6 @@ export default function ConnectedCarePuzzle() {
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="connected-care__scroll-hint" aria-hidden="true">
-          <span className="connected-care__scroll-hint-label">Role ou deslize para continuar</span>
-          <span className="connected-care__scroll-hint-arrow">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              focusable="false"
-            >
-              <path d="M12 5v14" />
-              <path d="m19 12-7 7-7-7" />
-            </svg>
-          </span>
         </div>
 
         <div className="connected-care__layer connected-care__layer--front" aria-hidden="true">
