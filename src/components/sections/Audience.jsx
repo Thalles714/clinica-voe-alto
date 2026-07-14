@@ -1,7 +1,9 @@
 import Container from '../ui/Container'
 import Card from '../ui/Card'
 import Button from '../ui/Button'
+import Reveal from '../ui/Reveal'
 import SectionTitle from '../ui/SectionTitle'
+import InteractiveImage from '../ui/InteractiveImage'
 import { whatsappUrl } from '../../data/clinic'
 
 const audienceMessage =
@@ -13,32 +15,36 @@ const audiences = [
     description:
       'Apoio ao desenvolvimento, à aprendizagem e ao comportamento, com orientação também para a família.',
     tags: ['Desenvolvimento', 'Aprendizagem', 'Comportamento'],
-    image: '/imagens/publico/atendimento-criancas.jpg',
+    image: '/imagens/publico/atendimento-criancas.webp',
     alt: 'Atendimento para crianças na Clínica Voe Alto',
+    tone: 'pink',
   },
   {
     title: 'Adolescentes',
     description:
       'Acompanhamento nas mudanças emocionais, na escola, na socialização e na construção da autoestima.',
     tags: ['Saúde emocional', 'Escola', 'Socialização'],
-    image: '/imagens/publico/atendimento-adolescentes.jpg',
+    image: '/imagens/publico/atendimento-adolescentes.webp',
     alt: 'Atendimento para adolescentes na Clínica Voe Alto',
+    tone: 'blue',
   },
   {
     title: 'Adultos',
     description:
-      'Cuidado com saúde emocional, ansiedade, bem-estar, autoconhecimento e qualidade de vida.',
-    tags: ['Ansiedade', 'Bem-estar', 'Autoconhecimento'],
-    image: '/imagens/publico/atendimento-adultos.jpg',
+      'Cuidado com saúde emocional, bem-estar, autoconhecimento e qualidade de vida.',
+    tags: ['Saúde emocional', 'Bem-estar', 'Autoconhecimento'],
+    image: '/imagens/publico/atendimento-adultos.webp',
     alt: 'Atendimento para adultos na Clínica Voe Alto',
+    tone: 'blue',
   },
   {
     title: 'Famílias',
     description:
       'Orientação para quem tem dúvidas, precisa de suporte e quer compreender melhor as necessidades dos filhos.',
     tags: ['Orientação', 'Suporte', 'Cuidado integrado'],
-    image: '/imagens/publico/orientacao-familias.jpg',
+    image: '/imagens/publico/orientacao-familias.webp',
     alt: 'Orientação para famílias na Clínica Voe Alto',
+    tone: 'pink',
   },
 ]
 
@@ -67,43 +73,52 @@ export default function Audience() {
         />
 
         <div className="grid gap-4 sm:gap-5 lg:grid-cols-2 lg:gap-6">
-          {audiences.map((item) => (
-            <Card key={item.title} hover className="flex h-full flex-col overflow-hidden p-0">
-              <div className="relative aspect-[16/10] overflow-hidden bg-brand-light-gray">
-                <img
+          {audiences.map((item, index) => (
+            <Reveal key={item.title} delay={index * 100}>
+              <Card hover className="audience-card flex h-full flex-col overflow-hidden p-0">
+                <InteractiveImage
                   src={item.image}
                   alt={item.alt}
                   width={800}
                   height={500}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover object-center"
-                />
-              </div>
-
-              <div className="flex flex-1 flex-col p-5 sm:p-6">
-                <h3 className="text-xl font-semibold leading-snug text-brand-dark sm:text-2xl">
-                  {item.title}
-                </h3>
-
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-dark/70 sm:text-base">
-                  {item.description}
-                </p>
-
-                <ul
-                  className="mt-5 flex flex-wrap gap-2"
-                  aria-label={`Áreas de atendimento para ${item.title}`}
+                  intensity="medium"
+                  reveal="mask"
+                  objectPosition="object-center"
+                  className={`audience-card__media relative aspect-[16/10] bg-surface-muted audience-card__media--${item.tone}`}
                 >
-                  {item.tags.map((tag) => (
-                    <li key={tag}>
-                      <span className="inline-flex rounded-full bg-brand-light-pink/45 px-3 py-1 text-xs font-medium text-brand-blue">
-                        {tag}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Card>
+                  <div
+                    className={`audience-card__overlay audience-card__overlay--${item.tone}`}
+                    aria-hidden="true"
+                  />
+                  <p className="audience-card__label" aria-hidden="true">
+                    {item.title}
+                  </p>
+                </InteractiveImage>
+
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <h3 className="text-xl font-semibold leading-snug text-ink sm:text-2xl">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-muted sm:text-base">
+                    {item.description}
+                  </p>
+
+                  <ul
+                    className="mt-5 flex flex-wrap gap-2"
+                    aria-label={`Áreas de atendimento para ${item.title}`}
+                  >
+                    {item.tags.map((tag) => (
+                      <li key={tag}>
+                        <span className="inline-flex rounded-full bg-brand-light-pink/45 px-3 py-1 text-xs font-medium text-brand-blue">
+                          {tag}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Card>
+            </Reveal>
           ))}
         </div>
 
@@ -114,9 +129,9 @@ export default function Audience() {
             size="lg"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Conversar com a Clínica Voe Alto pelo WhatsApp"
+            aria-label="Agendar pelo WhatsApp com a Clínica Voe Alto"
           >
-            Conversar pelo WhatsApp
+            Agendar pelo WhatsApp
           </Button>
         </div>
       </Container>

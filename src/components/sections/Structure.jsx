@@ -1,48 +1,62 @@
 import Container from '../ui/Container'
 import Card from '../ui/Card'
 import Button from '../ui/Button'
+import Reveal from '../ui/Reveal'
 import SectionTitle from '../ui/SectionTitle'
+import InteractiveImage from '../ui/InteractiveImage'
 import { locationUrl } from '../../data/clinic'
 
 const galleryItems = [
   {
-    title: 'Acolher',
-    description: 'Um lugar para chegar com tranquilidade e se sentir bem-vindo.',
-    src: '/imagens/estrutura/fachada-clinica-voe-alto.jpg',
+    title: 'Fachada',
+    description: 'Chegada tranquila, com fácil identificação da clínica no Setor Sul.',
+    src: '/imagens/estrutura/fachada-clinica-voe-alto.webp',
     alt: 'Ambiente ilustrativo de acolhimento da Clínica Voe Alto',
     featured: true,
     objectPosition: 'object-[center_top]',
+    intensity: 'medium',
+    reveal: 'mask',
+    glow: true,
   },
   {
-    title: 'Envolver',
-    description: 'Atenção próxima desde o primeiro contato com a família.',
-    src: '/imagens/estrutura/recepcao-clinica-voe-alto.jpg',
+    title: 'Recepção',
+    description: 'Primeiro contato acolhedor para famílias e pacientes.',
+    src: '/imagens/estrutura/recepcao-clinica-voe-alto.webp',
     alt: 'Ambiente ilustrativo de recepção e cuidado da Clínica Voe Alto',
     featured: false,
     objectPosition: 'object-center',
+    intensity: 'soft',
+    reveal: 'wipe-left',
+    glow: false,
   },
   {
-    title: 'Capacitar',
-    description: 'Espaços pensados para estimular desenvolvimento e autonomia.',
-    src: '/imagens/estrutura/sala-atendimento-infantil.jpg',
+    title: 'Sala infantil',
+    description: 'Espaço pensado para o acompanhamento de crianças.',
+    src: '/imagens/estrutura/sala-atendimento-infantil.webp',
     alt: 'Ambiente ilustrativo de acompanhamento infantil da Clínica Voe Alto',
     featured: false,
     objectPosition: 'object-center',
+    intensity: 'soft',
+    reveal: 'wipe-up',
+    glow: false,
   },
   {
-    title: 'Integrar',
-    description: 'Cuidado que une diferentes áreas em torno de cada necessidade.',
-    src: '/imagens/estrutura/sala-atendimento-multidisciplinar.jpg',
+    title: 'Atendimento integrado',
+    description: 'Ambientes preparados para o trabalho multidisciplinar.',
+    src: '/imagens/estrutura/sala-atendimento-multidisciplinar.webp',
     alt: 'Ambiente ilustrativo de atendimento multidisciplinar da Clínica Voe Alto',
     featured: false,
     objectPosition: 'object-center',
+    intensity: 'soft',
+    reveal: 'fade-scale',
+    glow: false,
   },
 ]
 
 const highlights = [
-  'Localização de fácil acesso em Aparecida de Goiânia',
-  'Cuidado pensado para transmitir segurança e confiança',
-  'Uma experiência mais humana e confortável para famílias',
+  'Localização de fácil acesso no Setor Sul, em Goiânia',
+  'Ambiente pensado para acolher crianças e famílias',
+  'Cuidado presencial com orientação clara desde o primeiro contato',
 ]
 
 function PinIcon() {
@@ -89,31 +103,38 @@ function GalleryImage({
   alt,
   featured = false,
   objectPosition = 'object-center',
+  intensity = 'soft',
+  reveal = 'wipe-left',
+  glow = false,
   priority = false,
 }) {
   return (
     <figure
       className={[
-        'group relative overflow-hidden rounded-3xl border border-brand-light-pink/40 bg-brand-light-gray shadow-md shadow-brand-dark/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-dark/10',
+        'structure-figure relative overflow-hidden rounded-3xl border border-line bg-surface-elevated shadow-md shadow-brand-dark/10',
         featured
           ? 'aspect-[4/5] lg:aspect-auto lg:h-full lg:min-h-[28rem]'
           : 'aspect-[16/10] lg:aspect-[16/10]',
       ].join(' ')}
     >
-      <img
+      <InteractiveImage
         src={src}
         alt={alt}
         width={featured ? 900 : 700}
         height={featured ? 1125 : 440}
-        loading={priority ? 'eager' : 'lazy'}
-        decoding="async"
-        className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] ${objectPosition}`}
-      />
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-brand-dark/55 via-brand-dark/10 to-transparent"
-        aria-hidden="true"
-      />
-      <figcaption className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        priority={priority}
+        intensity={intensity}
+        reveal={reveal}
+        glow={glow}
+        objectPosition={objectPosition}
+        className="absolute inset-0 h-full w-full"
+      >
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-dark/45 via-brand-dark/10 to-transparent"
+          aria-hidden="true"
+        />
+      </InteractiveImage>
+      <figcaption className="structure-caption pointer-events-none absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5">
         <p className="text-base font-semibold text-brand-white sm:text-lg">{title}</p>
         <p className="mt-1 text-sm leading-relaxed text-brand-white/85">{description}</p>
       </figcaption>
@@ -134,52 +155,58 @@ export default function Structure() {
       <Container className="relative z-10">
         <SectionTitle
           eyebrow="Nossa estrutura"
-          title="Um ambiente pensado para acolher, integrar e acompanhar"
-          description="Mais do que um espaço físico, a Clínica Voe Alto busca oferecer uma experiência leve, segura e humana para crianças, adolescentes, adultos e famílias."
+          title="Um ambiente preparado para acolher e acompanhar"
+          description="Espaços pensados para crianças, adolescentes, adultos e famílias se sentirem seguros desde a chegada."
           eyebrowVariant="blue"
         />
 
         <div className="grid gap-4 lg:grid-cols-2 lg:items-stretch lg:gap-5">
-          <GalleryImage {...featured} priority />
+          <Reveal>
+            <GalleryImage {...featured} priority />
+          </Reveal>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-            {secondary.map((item) => (
-              <GalleryImage key={item.title} {...item} />
+            {secondary.map((item, index) => (
+              <Reveal key={item.title} delay={(index + 1) * 90}>
+                <GalleryImage {...item} />
+              </Reveal>
             ))}
           </div>
         </div>
 
-        <figure className="group relative mt-4 overflow-hidden rounded-3xl border border-brand-light-pink/40 bg-brand-light-gray shadow-md shadow-brand-dark/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-dark/10 sm:mt-5">
-          <div className="relative aspect-[21/9] min-h-[11rem] sm:min-h-[13rem] lg:min-h-[15rem]">
-            <img
-              src="/imagens/estrutura/ambiente-acolhedor-clinica.jpg"
+        <Reveal delay={160}>
+          <figure className="structure-banner relative mt-4 overflow-hidden rounded-3xl border border-line bg-surface-elevated shadow-md shadow-brand-dark/10 sm:mt-5">
+            <InteractiveImage
+              src="/imagens/estrutura/ambiente-acolhedor-clinica.webp"
               alt="Ambiente ilustrativo de cuidado e convivência da Clínica Voe Alto"
               width={1400}
               height={600}
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-brand-dark/50 via-brand-dark/20 to-transparent"
-              aria-hidden="true"
-            />
-            <figcaption className="absolute inset-y-0 left-0 flex max-w-[15rem] flex-col justify-end p-4 sm:max-w-md sm:p-7">
+              intensity="soft"
+              reveal="wipe-left"
+              className="relative aspect-[21/9] min-h-[11rem] sm:min-h-[13rem] lg:min-h-[15rem]"
+              objectPosition="object-center"
+            >
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-r from-brand-dark/50 via-brand-dark/20 to-transparent"
+                aria-hidden="true"
+              />
+            </InteractiveImage>
+            <figcaption className="structure-caption pointer-events-none absolute inset-y-0 left-0 z-10 flex max-w-[15rem] flex-col justify-end p-4 sm:max-w-md sm:p-7">
               <p className="text-base font-semibold text-brand-white sm:text-xl">
-                Desenvolvimento contínuo
+                Ambiente de convivência
               </p>
               <p className="mt-1 text-sm leading-snug text-brand-white/85 sm:text-base sm:leading-relaxed">
-                Apoio para fortalecer habilidades, autonomia e bem-estar.
+                Um espaço pensado para acolher com mais calma e presença.
               </p>
             </figcaption>
-          </div>
-        </figure>
+          </figure>
+        </Reveal>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-3 sm:gap-5 lg:mt-10">
           {highlights.map((text) => (
             <Card key={text} hover className="flex h-full items-start gap-3 p-5 sm:p-6">
               <CheckIcon />
-              <p className="text-sm leading-relaxed text-brand-dark/80 sm:text-base">{text}</p>
+              <p className="text-sm leading-relaxed text-ink-muted sm:text-base">{text}</p>
             </Card>
           ))}
         </div>

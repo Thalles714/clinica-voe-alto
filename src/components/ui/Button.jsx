@@ -1,14 +1,14 @@
 const variants = {
   primary:
-    'bg-brand-pink text-brand-dark hover:bg-brand-pink/90 focus:ring-brand-pink/40 shadow-sm shadow-brand-pink/20',
+    'bg-brand-pink text-brand-dark hover:bg-brand-pink/90 focus-visible:ring-brand-pink/40 shadow-sm shadow-brand-pink/20',
   secondary:
-    'bg-transparent text-brand-blue border border-brand-blue hover:bg-brand-blue/5 focus:ring-brand-blue/30',
+    'bg-transparent text-ink border border-line hover:bg-surface-muted focus-visible:ring-brand-blue/30',
   ghost:
-    'bg-transparent text-brand-dark hover:bg-brand-light-gray focus:ring-brand-blue/20',
+    'bg-transparent text-ink hover:bg-surface-muted focus-visible:ring-brand-blue/20',
   outline:
-    'bg-transparent text-brand-dark border border-brand-light-gray hover:bg-brand-light-gray focus:ring-brand-blue/20',
+    'bg-transparent text-ink border border-line hover:bg-surface-muted focus-visible:ring-brand-blue/20',
   whatsapp:
-    'bg-brand-pink text-brand-dark hover:bg-brand-pink/90 focus:ring-brand-pink/40 shadow-sm shadow-brand-pink/20',
+    'bg-brand-pink text-brand-dark hover:bg-brand-pink/90 focus-visible:ring-brand-pink/40 shadow-sm shadow-brand-pink/20',
 }
 
 const sizes = {
@@ -26,8 +26,8 @@ export default function Button({
   ...props
 }) {
   const classes = [
-    'inline-flex items-center justify-center font-semibold rounded-2xl transition-all duration-200',
-    'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white',
+    'ui-button inline-flex items-center justify-center font-semibold rounded-2xl transition-all duration-200',
+    'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-page',
     variants[variant],
     sizes[size],
     className,

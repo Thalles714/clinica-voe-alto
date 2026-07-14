@@ -1,5 +1,10 @@
+import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import Button from '../ui/Button'
+import ThemeToggle from '../ui/ThemeToggle'
 import { whatsappUrl } from '../../data/clinic'
+
+export const MOBILE_NAV_ID = 'mobile-navigation'
 
 function CloseIcon() {
   return (
@@ -20,58 +25,150 @@ function CloseIcon() {
   )
 }
 
-export default function MobileMenu({ isOpen, onClose, links }) {
-  if (!isOpen) return null
+function getFocusable(container) {
+  if (!container) return []
+  return [
+    ...container.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  ].filter((el) => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true')
+}
 
-  return (
-    <div className="fixed inset-0 z-[60] lg:hidden" role="dialog" aria-modal="true" aria-label="Menu de navegação">
-      <div
-        className="absolute inset-0 bg-brand-dark/40 backdrop-blur-sm"
+export default function MobileMenu({ isOpen, onClose, links, returnFocusRef }) {
+  const panelRef = useRef(null)
+  const closeBtnRef = useRef(null)
+
+  useEffect(() => {
+    if (!isOpen) return undefined
+
+    const previousOverflow = document.body.style.overflow
+    const previousPaddingRight = document.body.style.paddingRight
+    const scrollbarGap = window.innerWidth - document.documentElement.clientWidth
+
+    document.body.style.overflow = 'hidden'
+    if (scrollbarGap > 0) {
+      document.body.style.paddingRight = `${scrollbarGap}px`
+    }
+
+    const focusTimer = window.setTimeout(() => {
+      closeBtnRef.current?.focus()
+    }, 20)
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        onClose()
+        return
+      }
+
+      if (event.key !== 'Tab') return
+
+      const focusable = getFocusable(panelRef.current)
+      if (focusable.length === 0) {
+        event.preventDefault()
+        return
+      }
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      const active = document.activeElement
+
+      if (event.shiftKey) {
+        if (active === first || !panelRef.current?.contains(active)) {
+          event.preventDefault()
+          last.focus()
+        }
+      } else if (active === last || !panelRef.current?.contains(active)) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    const onResize = () => {
+      if (window.matchMedia('(min-width: 1024px)').matches) onClose()
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    window.addEventListener('resize', onResize)
+
+    const trigger = returnFocusRef?.current
+
+    return () => {
+      window.clearTimeout(focusTimer)
+      document.body.style.overflow = previousOverflow
+      document.body.style.paddingRight = previousPaddingRight
+      document.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('resize', onResize)
+      if (trigger && typeof trigger.focus === 'function') {
+        trigger.focus()
+      }
+    }
+  }, [isOpen, onClose, returnFocusRef])
+
+  if (!isOpen || typeof document === 'undefined') return null
+
+  return createPortal(
+    <div
+      id={MOBILE_NAV_ID}
+      className="mobile-nav"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu de navegação"
+    >
+      <button
+        type="button"
+        className="mobile-nav__backdrop"
         onClick={onClose}
-        aria-hidden="true"
+        aria-label="Fechar menu de navegação"
       />
 
-      <div className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-brand-white shadow-2xl shadow-brand-dark/10">
-        <div className="flex h-20 items-center justify-between border-b border-brand-light-gray px-6">
-          <span className="text-base font-semibold text-brand-dark">Menu</span>
+      <div ref={panelRef} className="mobile-nav__panel">
+        <div className="mobile-nav__header">
+          <span className="mobile-nav__title">Menu</span>
           <button
+            ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="rounded-xl p-2.5 text-brand-dark transition-colors duration-200 hover:bg-brand-light-gray focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+            className="mobile-nav__close"
             aria-label="Fechar menu de navegação"
           >
             <CloseIcon />
           </button>
         </div>
 
-        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-6" aria-label="Navegação mobile">
+        <nav className="mobile-nav__links" aria-label="Navegação mobile">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={onClose}
-              className="rounded-2xl px-4 py-3.5 text-base font-medium text-brand-dark/85 transition-colors duration-200 hover:bg-brand-light-pink/40 hover:text-brand-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30"
+              className="mobile-nav__link"
             >
               {link.label}
             </a>
           ))}
-
-          <div className="mt-6 border-t border-brand-light-gray pt-6">
-            <Button
-              href={whatsappUrl()}
-              variant="primary"
-              size="md"
-              className="w-full"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={onClose}
-              aria-label="Agendar pelo WhatsApp"
-            >
-              Agendar pelo WhatsApp
-            </Button>
-          </div>
         </nav>
+
+        <div className="mobile-nav__footer">
+          <div className="mobile-nav__theme">
+            <span className="mobile-nav__theme-label">Aparência</span>
+            <ThemeToggle />
+          </div>
+          <Button
+            href={whatsappUrl()}
+            variant="primary"
+            size="md"
+            className="w-full"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            aria-label="Agendar avaliação pelo WhatsApp"
+          >
+            Agendar avaliação pelo WhatsApp
+          </Button>
+        </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

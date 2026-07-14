@@ -4,6 +4,7 @@ import WhatsAppButton from './components/layout/WhatsAppButton'
 import Hero from './components/sections/Hero'
 import Trust from './components/sections/Trust'
 import Specialties from './components/sections/Specialties'
+import ConnectedCarePuzzle from './components/sections/ConnectedCarePuzzle'
 import Structure from './components/sections/Structure'
 import Process from './components/sections/Process'
 import Team from './components/sections/Team'
@@ -14,11 +15,15 @@ import FinalCTA from './components/sections/FinalCTA'
 export default function App() {
   return (
     <>
+      <a href="#conteudo-principal" className="skip-link">
+        Ir para o conteúdo
+      </a>
       <Header />
-      <main>
+      <main id="conteudo-principal">
         <Hero />
         <Trust />
         <Specialties />
+        <ConnectedCarePuzzle />
         <Structure />
         <Process />
         <Team />

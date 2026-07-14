@@ -57,7 +57,7 @@ export const specialties = [
     title: 'Massagem Terapêutica',
     category: 'Bem-estar',
     description:
-      'Técnicas que favorecem relaxamento, alívio de tensões e bem-estar.',
+      'Técnicas manuais que apoiam relaxamento e alívio de tensões no contexto do cuidado clínico.',
   },
   {
     title: 'Grupo de Apoio a Mães',

@@ -24,7 +24,7 @@ export default function WhatsAppButton() {
       href={whatsappUrl()}
       target="_blank"
       rel="noreferrer"
-      className="fixed bottom-5 right-5 z-50 inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-pink px-3.5 py-2.5 text-brand-dark shadow-sm shadow-brand-dark/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-pink/90 hover:shadow-md hover:shadow-brand-dark/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/40 focus-visible:ring-offset-2 lg:hidden"
+      className="ui-button fixed bottom-5 right-5 z-50 inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-pink px-3.5 py-2.5 text-brand-dark shadow-sm shadow-brand-dark/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-pink/90 hover:shadow-md hover:shadow-brand-dark/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/40 focus-visible:ring-offset-2 focus-visible:ring-offset-page lg:hidden"
       aria-label="Agendar pelo WhatsApp com a Clínica Voe Alto"
     >
       <ChatIcon />

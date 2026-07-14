@@ -4,7 +4,7 @@ import AssistantChat from '../ui/AssistantChat'
 const supportItems = [
   'Atendimento infantil, adolescente e adulto',
   'Equipe multidisciplinar',
-  'Localização em Aparecida de Goiânia',
+  'Localização em Goiânia',
 ]
 
 function CheckIcon() {
@@ -29,12 +29,12 @@ export default function FinalCTA() {
   return (
     <section
       id="contato"
-      className="bg-brand-light-gray py-16 pb-24 sm:py-20 sm:pb-24 lg:py-28 lg:pb-28"
+      className="bg-surface-muted py-16 pb-24 sm:py-20 sm:pb-24 lg:py-28 lg:pb-28"
     >
       <Container>
         <div className="relative overflow-hidden rounded-3xl bg-brand-blue shadow-xl shadow-brand-blue/25">
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-blue to-[#18325c]"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-blue via-brand-blue to-brand-blue/90"
             aria-hidden="true"
           />
           <div className="relative grid gap-8 p-6 sm:gap-10 sm:p-10 lg:grid-cols-2 lg:items-center lg:gap-12 lg:p-14 xl:p-16">
@@ -49,17 +49,16 @@ export default function FinalCTA() {
 
             <div className="relative z-10">
               <span className="inline-flex rounded-full bg-brand-light-pink/20 px-4 py-1.5 text-sm font-semibold tracking-wide text-brand-light-pink ring-1 ring-brand-light-pink/25">
-                Pronto para o próximo passo
+                Vamos conversar
               </span>
 
               <h2 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-brand-white sm:text-4xl lg:text-[2.5rem]">
-                Converse com a Clínica Voe Alto e entenda o melhor caminho de cuidado
+                Fale com a Clínica Voe Alto e entenda o melhor caminho de cuidado
               </h2>
 
               <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-white/80 sm:text-lg">
-                Você não precisa decidir tudo sozinho. Use o assistente para iniciar o
-                contato. A equipe humana ouve sua necessidade e orienta o próximo passo
-                pelo WhatsApp.
+                Use o assistente para escolher o tema. No WhatsApp, a equipe humana
+                responde com orientação concreta sobre agendamento e especialidades.
               </p>
 
               <ul className="mt-8 space-y-3" aria-label="Diferenciais da clínica">

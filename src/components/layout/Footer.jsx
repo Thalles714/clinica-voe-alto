@@ -31,7 +31,7 @@ export default function Footer() {
   const formattedPhone = formatPhone(clinic.phone)
 
   return (
-    <footer className="border-t border-brand-light-pink/40 bg-brand-white">
+    <footer className="border-t border-line bg-surface">
       <Container className="py-14 pb-20 sm:py-16 sm:pb-16 lg:py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-14">
           <div className="sm:col-span-2 lg:col-span-1">
@@ -49,13 +49,13 @@ export default function Footer() {
                 className="h-14 w-auto object-contain sm:h-16 lg:h-[4.75rem]"
               />
             </a>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-brand-dark/70">
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink-muted">
               {clinic.tagline}
             </p>
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-dark">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-ink">
               Navegação
             </h3>
             <ul className="space-y-3">
@@ -63,7 +63,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-brand-dark/75 transition-colors duration-200 hover:text-brand-blue focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                    className="footer-link text-sm text-ink-muted hover:text-brand-blue focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
                   >
                     {link.label}
                   </a>
@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-dark">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-ink">
               Contato
             </h3>
             <ul className="space-y-3.5 text-sm">
@@ -81,8 +81,8 @@ export default function Footer() {
                 <a
                   href={whatsappUrl()}
                   target="_blank"
-                  rel="noreferrer"
-                  className="font-medium text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  rel="noopener noreferrer"
+                  className="footer-link font-medium text-brand-blue hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
                   aria-label={`WhatsApp ${formattedPhone}`}
                 >
                   WhatsApp: {formattedPhone}
@@ -92,8 +92,8 @@ export default function Footer() {
                 <a
                   href={clinic.instagram}
                   target="_blank"
-                  rel="noreferrer"
-                  className="font-medium text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  rel="noopener noreferrer"
+                  className="footer-link font-medium text-brand-blue hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
                   aria-label={`Instagram ${clinic.instagramHandle}`}
                 >
                   Instagram: {clinic.instagramHandle}
@@ -103,12 +103,12 @@ export default function Footer() {
                 <a
                   href={locationUrl()}
                   target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-start gap-2 font-semibold text-brand-blue transition-colors duration-200 hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  rel="noopener noreferrer"
+                  className="footer-link inline-flex items-start gap-2 font-semibold text-brand-blue hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
                   aria-label="Ver localização da Clínica Voe Alto no Google Maps"
                 >
                   <PinIcon />
-                  <span className="font-normal leading-relaxed text-brand-dark/75">
+                  <span className="font-normal leading-relaxed text-ink-muted">
                     {clinic.address}
                   </span>
                 </a>
@@ -117,13 +117,13 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-brand-dark">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-ink">
               Funcionamento
             </h3>
-            <ul className="space-y-3 text-sm text-brand-dark/75">
+            <ul className="space-y-3 text-sm text-ink-muted">
               {clinic.schedule.map((item) => (
                 <li key={item.label}>
-                  <span className="font-medium text-brand-dark/85">{item.label}: </span>
+                  <span className="font-medium text-ink">{item.label}: </span>
                   {item.value}
                 </li>
               ))}
@@ -131,14 +131,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-brand-light-pink/40 pt-8">
+        <div className="mt-12 border-t border-line pt-8">
           <div className="flex flex-col items-center gap-2.5 text-center sm:items-start sm:text-left">
-            <p className="text-sm text-brand-dark/70">
+            <p className="text-sm text-ink-muted">
               © {currentYear} {clinic.name}. Todos os direitos reservados.
             </p>
-            <p className="text-sm text-brand-dark/60">{clinic.legalEntity}</p>
-            <p className="text-xs text-brand-dark/50">CNPJ: {clinic.cnpj}</p>
-            <p className="mt-1 max-w-xl text-xs leading-relaxed text-brand-dark/55">
+            <p className="text-sm text-ink-muted">{clinic.legalEntity}</p>
+            <p className="text-xs text-ink-muted">CNPJ: {clinic.cnpj}</p>
+            <p className="mt-1 max-w-xl text-xs leading-relaxed text-ink-muted">
               Algumas imagens utilizadas neste site são meramente ilustrativas e podem
               ter sido geradas ou tratadas por inteligência artificial.
             </p>

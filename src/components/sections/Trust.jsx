@@ -1,29 +1,31 @@
 import Container from '../ui/Container'
+import Reveal from '../ui/Reveal'
 import SectionTitle from '../ui/SectionTitle'
+import { clinic } from '../../data/clinic'
 
 const trustItems = [
   {
-    title: '3 anos de atuação',
+    title: `${clinic.yearsOfExperience} anos de atuação`,
     description:
-      'Uma clínica dedicada ao acompanhamento de famílias e às diferentes fases do desenvolvimento.',
+      'Tempo dedicado a ouvir famílias e acompanhar diferentes fases do desenvolvimento.',
     icon: YearsIcon,
   },
   {
     title: 'Equipe multidisciplinar',
     description:
-      'Áreas que se complementam para compreender a necessidade e indicar o caminho mais adequado.',
+      'Especialidades que se conversam para compreender a necessidade e orientar o cuidado.',
     icon: TeamIcon,
   },
   {
     title: 'Atendimento humanizado',
     description:
-      'Escuta atenta e respeito em cada etapa, da primeira conversa ao acompanhamento contínuo.',
+      'Escuta atenta da primeira conversa ao acompanhamento contínuo, sem pressa nem julgamento.',
     icon: HeartIcon,
   },
   {
     title: 'Ambiente preparado',
     description:
-      'Espaços organizados para transmitir segurança e tranquilidade a quem chega buscando cuidado.',
+      'Espaços pensados para acolher com mais segurança e tranquilidade quem chega à clínica.',
     icon: HomeIcon,
   },
 ]
@@ -125,7 +127,7 @@ export default function Trust() {
         <SectionTitle
           eyebrow="Por que escolher a Voe Alto"
           title="Experiência, escuta e cuidado integrado"
-          description="Mais do que uma lista de especialidades: uma equipe preparada para ouvir, orientar e acompanhar cada paciente e família com clareza e respeito."
+          description="Uma clínica preparada para ouvir com atenção, orientar com clareza e acompanhar quem precisa de cuidado."
           eyebrowVariant="pink"
         />
 
@@ -134,26 +136,25 @@ export default function Trust() {
             const Icon = item.icon
 
             return (
-              <article
-                key={item.title}
-                className="group relative flex h-full flex-col border-t-2 border-brand-blue/80 bg-brand-white/70 px-5 pb-6 pt-5 backdrop-blur-sm transition-colors duration-300 hover:bg-brand-white sm:px-6 sm:pb-7 sm:pt-6"
-              >
-                <div
-                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-brand-blue text-brand-white shadow-sm shadow-brand-blue/20"
-                  aria-hidden="true"
-                >
-                  <Icon />
+              <Reveal key={item.title} delay={index * 90} as="article">
+                <div className="card-hover group relative flex h-full flex-col border-t-2 border-brand-blue/80 bg-surface/85 px-5 pb-6 pt-5 backdrop-blur-sm sm:px-6 sm:pb-7 sm:pt-6">
+                  <div
+                    className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-brand-blue text-brand-white shadow-sm shadow-brand-blue/20"
+                    aria-hidden="true"
+                  >
+                    <Icon />
+                  </div>
+                  <span className="mb-2 text-xs font-semibold tracking-[0.14em] text-ink-muted uppercase">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="text-lg font-semibold leading-snug text-ink">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2.5 flex-1 text-sm leading-relaxed text-ink-muted sm:text-[0.95rem]">
+                    {item.description}
+                  </p>
                 </div>
-                <span className="mb-2 text-xs font-semibold tracking-[0.14em] text-brand-blue/55 uppercase">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <h3 className="text-lg font-semibold leading-snug text-brand-blue">
-                  {item.title}
-                </h3>
-                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-brand-dark/65 sm:text-[0.95rem]">
-                  {item.description}
-                </p>
-              </article>
+              </Reveal>
             )
           })}
         </div>

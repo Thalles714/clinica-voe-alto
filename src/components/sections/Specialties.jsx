@@ -24,10 +24,10 @@ function ArrowIcon() {
 
 const cardThemes = [
   {
-    card: 'border border-brand-light-gray bg-brand-white shadow-sm shadow-brand-dark/5',
+    card: 'border border-line bg-surface shadow-sm shadow-brand-dark/10',
     badge: 'bg-brand-blue/10 text-brand-blue ring-1 ring-brand-blue/15',
-    title: 'text-brand-dark',
-    description: 'text-brand-dark/70',
+    title: 'text-ink',
+    description: 'text-ink-muted',
     link: 'text-brand-blue hover:text-brand-pink focus-visible:ring-brand-blue/30',
   },
   {
@@ -48,9 +48,9 @@ function SpecialtyCard({ specialty, decorative = false, toneIndex = 0 }) {
   return (
     <div
       className={[
-        'group flex h-full w-[16.5rem] shrink-0 flex-col rounded-3xl p-4 transition-all duration-300 sm:w-[20rem] sm:p-5 lg:w-[21.25rem] lg:p-6',
+            'card-hover group flex h-full w-[16.5rem] shrink-0 flex-col rounded-3xl p-4 sm:w-[20rem] sm:p-5 lg:w-[21.25rem] lg:p-6',
         theme.card,
-        !decorative && 'hover:-translate-y-0.5',
+        !decorative && 'specialty-card',
       ]
         .filter(Boolean)
         .join(' ')}
@@ -82,7 +82,7 @@ function SpecialtyCard({ specialty, decorative = false, toneIndex = 0 }) {
           href={whatsappUrl(specialtyWhatsappMessage(specialty.title))}
           target="_blank"
           rel="noopener noreferrer"
-          className={`group mt-4 inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 ${theme.link}`}
+          className={`ui-button group mt-4 inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 ${theme.link}`}
           aria-label={`Falar sobre ${specialty.title} pelo WhatsApp`}
         >
           Falar sobre este atendimento
@@ -143,14 +143,16 @@ export default function Specialties() {
     let frameId = 0
     let offset = 0
     let lastTime = 0
-    const speed = window.matchMedia('(max-width: 767px)').matches ? 38 : 46
+    let inView = true
+    let speed = window.matchMedia('(max-width: 767px)').matches ? 38 : 46
+    const root = track.closest('.specialties-marquee')
 
     const tick = (time) => {
       if (!lastTime) lastTime = time
       const delta = Math.min(time - lastTime, 32)
       lastTime = time
 
-      if (!pausedRef.current) {
+      if (inView && !pausedRef.current) {
         offset -= (speed * delta) / 1000
         const loopWidth = track.scrollWidth / 2
         if (loopWidth > 0 && Math.abs(offset) >= loopWidth) {
@@ -159,13 +161,44 @@ export default function Specialties() {
         track.style.transform = `translate3d(${offset}px, 0, 0)`
       }
 
-      frameId = window.requestAnimationFrame(tick)
+      if (inView) {
+        frameId = window.requestAnimationFrame(tick)
+      } else {
+        frameId = 0
+      }
     }
 
-    frameId = window.requestAnimationFrame(tick)
+    const start = () => {
+      if (!frameId) {
+        lastTime = 0
+        frameId = window.requestAnimationFrame(tick)
+      }
+    }
+
+    const onResize = () => {
+      speed = window.matchMedia('(max-width: 767px)').matches ? 38 : 46
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting
+        if (inView) start()
+        else if (frameId) {
+          window.cancelAnimationFrame(frameId)
+          frameId = 0
+        }
+      },
+      { threshold: 0.05 },
+    )
+    if (root) observer.observe(root)
+
+    window.addEventListener('resize', onResize, { passive: true })
+    start()
 
     return () => {
-      window.cancelAnimationFrame(frameId)
+      observer.disconnect()
+      window.removeEventListener('resize', onResize)
+      if (frameId) window.cancelAnimationFrame(frameId)
       track.style.transform = ''
     }
   }, [reduceMotion])
@@ -187,8 +220,8 @@ export default function Specialties() {
       <Container className="relative z-10">
         <SectionTitle
           eyebrow="Especialidades"
-          title="Cuidado multidisciplinar para desenvolvimento, autonomia e bem-estar"
-          description="Da aprendizagem ao comportamento, da comunicação ao suporte familiar, reunimos especialidades que ajudam a compreender necessidades e orientar o cuidado mais adequado. Você não precisa saber exatamente qual atendimento procurar antes de entrar em contato."
+          title="Especialidades que se complementam em torno de cada necessidade"
+          description="Da aprendizagem à comunicação, do comportamento ao suporte familiar. Se ainda não souber qual atendimento procurar, fale conosco — orientamos o caminho."
           eyebrowVariant="blue"
         />
       </Container>
@@ -220,11 +253,11 @@ export default function Specialties() {
           }}
         >
           <div
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#faf7f8] to-transparent sm:w-14 xl:w-20"
+            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[var(--surface-muted)] to-transparent sm:w-14 xl:w-20"
             aria-hidden="true"
           />
           <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#faf7f8] to-transparent sm:w-14 xl:w-20"
+            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[var(--surface-muted)] to-transparent sm:w-14 xl:w-20"
             aria-hidden="true"
           />
 
@@ -234,7 +267,7 @@ export default function Specialties() {
           </div>
         </div>
 
-        <p className="mt-3 px-4 text-center text-xs leading-snug text-brand-dark/50 sm:mt-4 sm:text-sm">
+        <p className="mx-auto mt-3 max-w-3xl px-4 text-center text-xs leading-snug text-ink-muted sm:mt-4 sm:text-sm">
           {reduceMotion
             ? 'Deslize para ver mais especialidades.'
             : 'Desliza automaticamente. Toque para pausar.'}

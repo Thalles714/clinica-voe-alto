@@ -1,6 +1,6 @@
 const variants = {
-  pink: 'bg-brand-light-pink/70 text-brand-blue ring-1 ring-brand-light-pink',
-  blue: 'bg-brand-blue/10 text-brand-blue ring-1 ring-brand-blue/15',
+  pink: 'bg-brand-light-pink/60 text-brand-blue ring-1 ring-brand-pink/30',
+  blue: 'bg-brand-blue/10 text-brand-blue ring-1 ring-brand-blue/20',
 }
 
 export default function Badge({ children, variant = 'pink', className = '' }) {

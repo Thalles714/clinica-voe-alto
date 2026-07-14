@@ -33,20 +33,20 @@ function FaqItem({ item, index, isOpen, onToggle, baseId }) {
       className={[
         'overflow-hidden p-0 shadow-sm transition-all duration-200',
         isOpen
-          ? 'border-brand-light-pink/80 shadow-md shadow-brand-dark/5'
-          : 'hover:border-brand-light-pink/50',
+          ? 'border-brand-light-pink/80 shadow-md shadow-brand-dark/10'
+          : 'border-line',
       ].join(' ')}
     >
       <h3 className="m-0">
         <button
           id={buttonId}
           type="button"
-          className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left transition-colors duration-200 hover:bg-brand-light-gray/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-blue/30 sm:px-5 sm:py-4"
+          className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left text-ink transition-colors duration-200 hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-blue/30 sm:px-5 sm:py-4"
           aria-expanded={isOpen}
           aria-controls={panelId}
           onClick={onToggle}
         >
-          <span className="text-base font-semibold leading-snug text-brand-dark sm:text-lg">
+          <span className="text-base font-semibold leading-snug text-ink sm:text-lg">
             {item.question}
           </span>
           <ChevronIcon open={isOpen} />
@@ -57,12 +57,15 @@ function FaqItem({ item, index, isOpen, onToggle, baseId }) {
         id={panelId}
         role="region"
         aria-labelledby={buttonId}
-        hidden={!isOpen}
+        className={`faq-panel ${isOpen ? 'is-open' : ''}`}
+        aria-hidden={!isOpen}
       >
-        <div className="border-t border-brand-light-pink/40 px-4 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
-          <p className="text-sm leading-relaxed text-brand-dark/75 sm:text-base">
+        <div>
+          <div className="border-t border-line px-4 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
+          <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
             {item.answer}
           </p>
+          </div>
         </div>
       </div>
     </Card>
@@ -92,7 +95,7 @@ export default function FAQ() {
         <SectionTitle
           eyebrow="Dúvidas frequentes"
           title="Tire suas dúvidas antes de entrar em contato"
-          description="Respostas claras para ajudar você a entender como funciona o atendimento e o que fazer a seguir."
+          description="Respostas claras sobre como funciona o atendimento, quem a clínica recebe e como começar."
           eyebrowVariant="blue"
         />
 
@@ -110,11 +113,11 @@ export default function FAQ() {
         </div>
 
         <Card className="mx-auto mt-8 max-w-3xl p-5 text-center sm:mt-10 sm:p-7">
-          <p className="text-lg font-semibold text-brand-dark sm:text-xl">
+          <p className="text-lg font-semibold text-ink sm:text-xl">
             Ainda ficou com alguma dúvida?
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-brand-dark/70 sm:text-base">
-            Chame pelo WhatsApp. A equipe pode orientar o próximo passo.
+          <p className="mt-2 text-sm leading-relaxed text-ink-muted sm:text-base">
+            Chame pelo WhatsApp. A equipe responde e orienta com tranquilidade.
           </p>
           <div className="mt-5">
             <Button
@@ -123,9 +126,9 @@ export default function FAQ() {
               size="md"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Falar pelo WhatsApp com a Clínica Voe Alto"
+              aria-label="Tirar dúvida pelo WhatsApp com a Clínica Voe Alto"
             >
-              Falar pelo WhatsApp
+              Tirar dúvida no WhatsApp
             </Button>
           </div>
         </Card>

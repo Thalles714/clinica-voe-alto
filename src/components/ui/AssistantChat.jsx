@@ -7,7 +7,7 @@ const options = [
     id: 'crianca',
     label: 'Atendimento para criança',
     reply:
-      'Entendi. Podemos ajudar a orientar o acompanhamento infantil. No WhatsApp, a equipe ouve sua necessidade e indica o próximo passo, sem diagnóstico automático por aqui.',
+      'Entendi. Podemos ajudar no acompanhamento infantil. No WhatsApp, a equipe ouve sua necessidade e indica o caminho — sem diagnóstico automático por aqui.',
     whatsappMessage:
       'Olá, gostaria de informações sobre atendimento infantil na Clínica Voe Alto.',
   },
@@ -15,7 +15,7 @@ const options = [
     id: 'adolescente',
     label: 'Atendimento para adolescente',
     reply:
-      'Certo. A adolescência pode trazer mudanças emocionais, escolares e sociais. A equipe pode orientar o caminho de atendimento mais adequado para esse momento.',
+      'Certo. A adolescência pode trazer mudanças emocionais, escolares e sociais. A equipe orienta o atendimento mais adequado para esse momento.',
     whatsappMessage:
       'Olá, gostaria de informações sobre atendimento para adolescentes na Clínica Voe Alto.',
   },
@@ -23,7 +23,7 @@ const options = [
     id: 'adulto',
     label: 'Atendimento para adulto',
     reply:
-      'Entendi. Também acompanhamos adultos que buscam cuidado emocional, bem-estar e orientação. A conversa pelo WhatsApp ajuda a definir o próximo passo.',
+      'Entendi. Também acompanhamos adultos que buscam cuidado emocional, bem-estar e orientação. A conversa pelo WhatsApp ajuda a definir o caminho.',
     whatsappMessage:
       'Olá, gostaria de informações sobre atendimento para adultos na Clínica Voe Alto.',
   },
@@ -77,8 +77,8 @@ export default function AssistantChat() {
         aria-hidden="true"
       />
 
-      <div className="relative flex flex-col overflow-hidden rounded-3xl border border-brand-white/25 bg-brand-white shadow-xl shadow-brand-dark/15">
-        <div className="flex items-start gap-3 border-b border-brand-light-gray px-5 py-4 sm:px-6">
+      <div className="relative flex flex-col overflow-hidden rounded-3xl border border-brand-white/20 bg-surface/80 shadow-xl shadow-brand-dark/20 backdrop-blur-xl">
+        <div className="flex items-start gap-3 border-b border-line px-5 py-4 sm:px-6">
           <div
             className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-light-pink/70 text-brand-blue"
             aria-hidden="true"
@@ -86,17 +86,17 @@ export default function AssistantChat() {
             <ChatIcon />
           </div>
           <div>
-            <p className="text-sm font-semibold text-brand-dark sm:text-base">
+            <p className="text-sm font-semibold text-ink sm:text-base">
               Assistente de orientação
             </p>
-            <p className="mt-0.5 text-xs leading-relaxed text-brand-dark/60 sm:text-sm">
+            <p className="mt-0.5 text-xs leading-relaxed text-ink-muted sm:text-sm">
               Escolha uma opção e continue pelo WhatsApp.
             </p>
           </div>
         </div>
 
         <div className="flex flex-1 flex-col gap-3 px-4 py-4 sm:px-5 sm:py-5">
-          <div className="max-w-[92%] rounded-2xl rounded-tl-md bg-brand-light-gray px-3.5 py-3 text-sm leading-relaxed text-brand-dark/85">
+          <div className="max-w-[92%] rounded-2xl rounded-tl-md bg-surface-muted px-3.5 py-3 text-sm leading-relaxed text-ink">
             {initialMessage}
           </div>
 
@@ -105,7 +105,7 @@ export default function AssistantChat() {
               <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-brand-light-pink px-3.5 py-3 text-sm font-medium leading-relaxed text-brand-dark">
                 {selected.label}
               </div>
-              <div className="max-w-[92%] rounded-2xl rounded-tl-md bg-brand-light-gray px-3.5 py-3 text-sm leading-relaxed text-brand-dark/85">
+              <div className="max-w-[92%] rounded-2xl rounded-tl-md bg-surface-muted px-3.5 py-3 text-sm leading-relaxed text-ink">
                 {selected.reply}
               </div>
             </>
@@ -118,7 +118,7 @@ export default function AssistantChat() {
                   key={option.id}
                   type="button"
                   onClick={() => setSelectedId(option.id)}
-                  className="rounded-2xl border border-brand-light-pink/70 bg-brand-white px-3.5 py-2.5 text-left text-sm font-medium text-brand-dark transition-all duration-200 hover:border-brand-pink hover:bg-brand-light-pink/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+                  className="rounded-2xl border border-line bg-surface px-3.5 py-2.5 text-left text-sm font-medium text-ink transition-all duration-200 hover:border-brand-pink hover:bg-brand-light-pink/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
                   aria-label={`Selecionar: ${option.label}`}
                 >
                   {option.label}
@@ -150,7 +150,7 @@ export default function AssistantChat() {
           )}
         </div>
 
-        <p className="border-t border-brand-light-gray px-4 py-3 text-center text-[11px] leading-relaxed text-brand-dark/50 sm:px-5 sm:text-xs">
+        <p className="border-t border-line px-4 py-3 text-center text-[11px] leading-relaxed text-ink-muted sm:px-5 sm:text-xs">
           Este assistente apenas facilita o primeiro contato. A orientação será feita pela
           equipe da clínica.
         </p>

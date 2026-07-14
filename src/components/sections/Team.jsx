@@ -3,6 +3,7 @@ import Card from '../ui/Card'
 import Badge from '../ui/Badge'
 import Button from '../ui/Button'
 import SectionTitle from '../ui/SectionTitle'
+import InteractiveImage from '../ui/InteractiveImage'
 import { whatsappUrl } from '../../data/clinic'
 
 const teamMessage = 'Olá, gostaria de falar com a equipe da Clínica Voe Alto.'
@@ -12,42 +13,42 @@ const teamAreas = [
     area: 'Aprendizagem e Neurodesenvolvimento',
     description:
       'Apoio a dificuldades escolares, desenvolvimento cognitivo e processos de aprendizagem.',
-    image: '/imagens/equipe/area-aprendizagem-neurodesenvolvimento.jpg',
+    image: '/imagens/equipe/area-aprendizagem-neurodesenvolvimento.webp',
     alt: 'Área de aprendizagem e neurodesenvolvimento da Clínica Voe Alto',
   },
   {
     area: 'Psicologia e Comportamento',
     description:
       'Cuidado emocional e comportamental em diferentes fases da vida, com escuta individualizada.',
-    image: '/imagens/equipe/area-psicologia-comportamento.jpg',
+    image: '/imagens/equipe/area-psicologia-comportamento.webp',
     alt: 'Área de psicologia e comportamento da Clínica Voe Alto',
   },
   {
     area: 'Comunicação e Linguagem',
     description:
       'Acompanhamento da comunicação, linguagem e fala para favorecer a expressão e a interação.',
-    image: '/imagens/equipe/area-comunicacao-linguagem.jpg',
+    image: '/imagens/equipe/area-comunicacao-linguagem.webp',
     alt: 'Área de comunicação e linguagem da Clínica Voe Alto',
   },
   {
     area: 'Autonomia e Terapias Integradas',
     description:
       'Fortalecimento de rotina, habilidades funcionais e participação nas atividades do dia a dia.',
-    image: '/imagens/equipe/area-autonomia-terapias-integradas.jpg',
+    image: '/imagens/equipe/area-autonomia-terapias-integradas.webp',
     alt: 'Área de autonomia e terapias integradas da Clínica Voe Alto',
   },
   {
     area: 'Acolhimento Familiar',
     description:
       'Orientação para famílias que querem compreender melhor as necessidades de quem amam.',
-    image: '/imagens/equipe/area-acolhimento-familiar.jpg',
+    image: '/imagens/equipe/area-acolhimento-familiar.webp',
     alt: 'Área de acolhimento familiar da Clínica Voe Alto',
   },
   {
     area: 'Orientação e Inclusão',
     description:
       'Suporte para construir caminhos mais seguros de desenvolvimento, inclusão e convivência.',
-    image: '/imagens/equipe/area-orientacao-inclusao.jpg',
+    image: '/imagens/equipe/area-orientacao-inclusao.webp',
     alt: 'Área de orientação e inclusão da Clínica Voe Alto',
   },
 ]
@@ -76,26 +77,27 @@ export default function Team() {
           eyebrowVariant="blue"
         />
 
-        <div className="mb-8 overflow-hidden rounded-3xl border border-brand-light-pink/40 bg-brand-white shadow-md shadow-brand-dark/5 lg:mb-10 lg:grid lg:grid-cols-2 lg:items-stretch">
-          <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[20rem]">
-            <img
-              src="/imagens/equipe/equipe-multidisciplinar-voe-alto.jpg"
-              alt="Equipe multidisciplinar da Clínica Voe Alto"
-              width={1000}
-              height={625}
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-center"
-            />
-          </div>
-          <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-9">
+        <div className="team-banner mb-8 overflow-hidden rounded-3xl border border-line bg-surface shadow-md shadow-brand-dark/10 lg:mb-10 lg:grid lg:grid-cols-2 lg:items-stretch">
+          <InteractiveImage
+            src="/imagens/equipe/equipe-multidisciplinar-voe-alto.webp"
+            alt="Equipe multidisciplinar da Clínica Voe Alto"
+            width={1000}
+            height={625}
+            intensity="soft"
+            reveal="wipe-up"
+            className="relative aspect-[16/10] h-full min-h-[14rem] lg:aspect-auto lg:min-h-[20rem]"
+            objectPosition="object-center"
+          >
+            <div className="team-banner__edge" aria-hidden="true" />
+          </InteractiveImage>
+          <div className="team-banner__copy flex flex-col justify-center p-6 sm:p-8 lg:p-9">
             <Badge variant="blue" className="w-fit px-3 py-1 text-xs">
               Equipe multidisciplinar
             </Badge>
-            <h3 className="mt-3 text-xl font-semibold leading-snug text-brand-dark sm:text-2xl">
+            <h3 className="mt-3 text-xl font-semibold leading-snug text-ink sm:text-2xl">
               Cuidado coordenado, com olhar individualizado
             </h3>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-brand-dark/70 sm:text-base">
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-muted sm:text-base">
               Diferentes áreas atuam juntas para compreender cada necessidade e indicar
               o acompanhamento mais adequado, com clareza, respeito e segurança.
             </p>
@@ -105,25 +107,21 @@ export default function Team() {
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
           {teamAreas.map((item) => (
             <Card key={item.area} hover className="flex h-full flex-col overflow-hidden p-0">
-              <div className="relative aspect-[16/10] overflow-hidden bg-brand-light-gray">
-                <img
-                  src={item.image}
-                  alt={item.alt}
-                  width={640}
-                  height={400}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-              </div>
+              <InteractiveImage
+                src={item.image}
+                alt={item.alt}
+                width={640}
+                height={400}
+                intensity="soft"
+                reveal="fade-scale"
+                className="relative aspect-[16/10] bg-surface-muted"
+                objectPosition="object-center"
+              />
               <div className="flex flex-1 flex-col p-5 sm:p-6">
-                <Badge variant="blue" className="w-fit px-3 py-1 text-xs">
-                  Área de atuação
-                </Badge>
-                <h3 className="mt-3 text-lg font-semibold leading-snug text-brand-dark">
+                <h3 className="text-lg font-semibold leading-snug text-ink">
                   {item.area}
                 </h3>
-                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-brand-dark/70">
+                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-ink-muted">
                   {item.description}
                 </p>
               </div>
@@ -131,9 +129,9 @@ export default function Team() {
           ))}
         </div>
 
-        <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-brand-dark/60 sm:mt-10 sm:text-base">
-          As informações individuais dos profissionais serão adicionadas após validação
-          oficial da clínica.
+        <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-ink-muted sm:mt-10 sm:text-base">
+          Nomes e registros dos profissionais serão publicados assim que a clínica
+          validar oficialmente cada informação.
         </p>
 
         <div className="mt-7 flex justify-center sm:mt-8">
@@ -143,9 +141,9 @@ export default function Team() {
             size="lg"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Falar com a equipe da Clínica Voe Alto pelo WhatsApp"
+            aria-label="Agendar pelo WhatsApp com a equipe da Clínica Voe Alto"
           >
-            Falar com a equipe
+            Agendar pelo WhatsApp
           </Button>
         </div>
       </Container>
