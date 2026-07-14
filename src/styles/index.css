@@ -106,6 +106,24 @@ body {
     #ffffff;
 }
 
+/* Keep first fold copy below the fixed top-bar clearance (especially mobile). */
+#inicio.section-atmosphere-hero {
+  padding-top: var(--site-header-clearance);
+  padding-bottom: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  #inicio.section-atmosphere-hero {
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  #inicio.section-atmosphere-hero {
+    padding-bottom: 5rem;
+  }
+}
+
 .section-atmosphere-soft-white {
   background:
     radial-gradient(ellipse 70% 55% at 100% 0%, rgba(241, 205, 219, 0.22), transparent 55%),
@@ -557,7 +575,32 @@ body {
   --motion-header: 1.05s;
   --motion-header-color: 0.85s;
   --motion-reveal: 0.58s;
-  --header-offset: 24px;
+  /* Mobile: keep the first bar higher and reserve clear space before hero copy. */
+  --header-offset: 8px;
+  --site-header-pad-top: 0.75rem;
+  --site-header-bar: 3.15rem;
+  --site-header-gap: 2.35rem;
+  --site-header-clearance: calc(
+    var(--site-header-pad-top) + var(--header-offset) + var(--site-header-bar) + var(--site-header-gap)
+  );
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-offset: 18px;
+    --site-header-pad-top: 0.85rem;
+    --site-header-bar: 3.35rem;
+    --site-header-gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-offset: 24px;
+    --site-header-pad-top: 0.9rem;
+    --site-header-bar: 3.55rem;
+    --site-header-gap: 1rem;
+  }
 }
 
 /* Top bar — fluid morph (Wolverine animacao-top-bar) */
@@ -565,13 +608,22 @@ body {
   position: fixed;
   inset: 0 0 auto;
   z-index: 50;
-  display: flex;
-  justify-content: center;
-  padding: 0.75rem 0.75rem 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, var(--site-header-gap));
+  justify-items: center;
+  padding: var(--site-header-pad-top) 0.75rem 0;
   pointer-events: none;
   transform: translate3d(0, 0, 0);
-  transition: transform var(--motion-header) var(--ease-header);
+  transition:
+    transform var(--motion-header) var(--ease-header),
+    grid-template-rows var(--motion-header) var(--ease-header);
   will-change: transform;
+}
+
+.site-header.is-compact {
+  --site-header-gap: 0px;
+  grid-template-rows: auto 0;
 }
 
 @media (min-width: 640px) {
@@ -594,6 +646,7 @@ body {
 .site-header__inner {
   position: relative;
   display: flex;
+  grid-row: 1;
   width: 100%;
   max-width: 80rem;
   pointer-events: auto;
@@ -608,6 +661,14 @@ body {
 .site-header.is-compact .site-header__inner {
   max-width: calc(100vw - 1.5rem);
   transform: translate3d(0, 0, 0);
+}
+
+/* Invisible spacer row — keeps hero copy away from the initial bar on mobile. */
+.site-header__spacer {
+  grid-row: 2;
+  width: min(100%, 80rem);
+  height: 100%;
+  pointer-events: none;
 }
 
 .site-header__bg {
@@ -654,25 +715,38 @@ body {
 .site-header__head {
   position: relative;
   z-index: 1;
-  display: flex;
+  display: grid;
   width: 100%;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  min-height: 2.75rem;
+  column-gap: 1rem;
+  min-height: var(--site-header-bar);
   padding-inline: 0.15rem;
   transition:
-    gap var(--motion-header) var(--ease-header),
+    column-gap var(--motion-header) var(--ease-header),
     min-height var(--motion-header) var(--ease-header),
     padding var(--motion-header) var(--ease-header);
+}
+
+@media (min-width: 1024px) {
+  .site-header__head {
+    column-gap: 1.5rem;
+  }
 }
 
 .site-header.is-compact .site-header__head {
   width: max-content;
   max-width: 100%;
-  gap: 2rem;
+  grid-template-columns: auto auto auto;
+  column-gap: 1.25rem;
   min-height: 2.35rem;
   padding-inline: 0.35rem;
+}
+
+@media (min-width: 1024px) {
+  .site-header.is-compact .site-header__head {
+    column-gap: 2rem;
+  }
 }
 
 .site-header__logo {
@@ -740,8 +814,9 @@ body {
 .site-header__nav {
   display: none;
   align-items: center;
+  justify-content: center;
   gap: 2rem;
-  margin-inline: auto;
+  justify-self: center;
 }
 
 @media (min-width: 1024px) {
@@ -751,7 +826,6 @@ body {
 }
 
 .site-header.is-compact .site-header__nav {
-  margin-inline: 0;
   gap: 1.5rem;
 }
 
@@ -790,8 +864,10 @@ body {
 .site-header__actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.5rem;
   flex-shrink: 0;
+  justify-self: end;
 }
 
 .site-header.is-compact .site-header__cta {

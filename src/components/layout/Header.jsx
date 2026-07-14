@@ -56,7 +56,10 @@ export default function Header() {
       const logo = head.querySelector('.site-header__logo')
       const nav = head.querySelector('.site-header__nav')
       const actions = head.querySelector('.site-header__actions')
-      const gap = Number.parseFloat(getComputedStyle(head).gap) || 32
+      const gap =
+        Number.parseFloat(getComputedStyle(head).columnGap) ||
+        Number.parseFloat(getComputedStyle(head).gap) ||
+        32
 
       const parts = [logo, nav, actions].filter((el) => {
         if (!el) return false
@@ -113,8 +116,10 @@ export default function Header() {
       const hideAfterY = getHideAfterY()
 
       setCompact((prev) => {
-        if (prev) return y > 56
-        return y > 120
+        const mobile = window.innerWidth < 1024
+        // Mobile: switch to the floating pill sooner so it stops covering hero copy.
+        if (prev) return y > (mobile ? 36 : 56)
+        return y > (mobile ? 48 : 120)
       })
 
       if (y < hideAfterY) {
@@ -236,6 +241,8 @@ export default function Header() {
           </div>
         </div>
       </div>
+
+      <div className="site-header__spacer" aria-hidden="true" />
 
       <MobileMenu
         isOpen={menuOpen}
