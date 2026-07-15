@@ -1,97 +1,78 @@
 import { useId } from 'react'
 
 /**
- * Jigsaw silhouettes matching the Hero Patterns "jigsaw" model the user provided:
- * square body + organic omega tabs/blanks (soft cubic necks, bulbous heads).
+ * Classical jigsaw silhouettes: a consistent square body with circular tabs
+ * and blanks. Side codes: T = tab out, B = blank in, F = flat.
  * Side codes: T = tab out, B = blank in, F = flat
  */
 
-const BODY = 28
-const MID = 50
-const NECK = 8
+function topSide(kind) {
+  if (kind === 'F') return 'L 96 24'
+  if (kind === 'T') {
+    return 'L 50 24 C 53 24 54 21 52 18 C 46 4 74 4 68 18 C 66 21 67 24 70 24 L 96 24'
+  }
+  return 'L 50 24 C 53 24 54 27 52 30 C 46 44 74 44 68 30 C 66 27 67 24 70 24 L 96 24'
+}
 
-/**
- * Horizontal knob — proportions derived from heropatterns jigsaw connectors
- * (soft lead-in cubics + bulbous head, not a plain circle).
- */
-function knobX(y, { tab, ltr }) {
-  const a = ltr ? MID - NECK : MID + NECK
-  const b = ltr ? MID + NECK : MID - NECK
-  const sx = ltr ? 1 : -1
-  // Top L→R: tab goes up (-Y). Bottom R→L: tab goes down (+Y).
-  const dir = ltr ? (tab ? -1 : 1) : tab ? 1 : -1
-  const d = 17.5 * dir
+function rightSide(kind) {
+  if (kind === 'F') return 'L 96 96'
+  if (kind === 'T') {
+    return 'L 96 50 C 96 53 99 54 102 52 C 116 46 116 74 102 68 C 99 66 96 67 96 70 L 96 96'
+  }
+  return 'L 96 50 C 96 53 93 54 90 52 C 76 46 76 74 90 68 C 93 66 96 67 96 70 L 96 96'
+}
 
+function bottomSide(kind) {
+  if (kind === 'F') return 'L 24 96'
+  if (kind === 'T') {
+    return 'L 70 96 C 67 96 66 99 68 102 C 74 116 46 116 52 102 C 54 99 53 96 50 96 L 24 96'
+  }
+  return 'L 70 96 C 67 96 66 93 68 90 C 74 76 46 76 52 90 C 54 93 53 96 50 96 L 24 96'
+}
+
+function leftSide(kind) {
+  if (kind === 'F') return 'L 24 24'
+  if (kind === 'T') {
+    return 'L 24 70 C 24 67 21 66 18 68 C 4 74 4 46 18 52 C 21 54 24 53 24 50 L 24 24'
+  }
+  return 'L 24 70 C 24 67 27 66 30 68 C 44 74 44 46 30 52 C 27 54 24 53 24 50 L 24 24'
+}
+
+function buildJigsaw(north, east, south, west) {
   return [
-    `L ${a} ${y}`,
-    `C ${a} ${y + d * 0.22}`,
-    `${MID - 13.2 * sx} ${y + d * 0.48}`,
-    `${MID - 11.4 * sx} ${y + d * 0.78}`,
-    `C ${MID - 6.2 * sx} ${y + d * 1.06}`,
-    `${MID + 6.2 * sx} ${y + d * 1.06}`,
-    `${MID + 11.4 * sx} ${y + d * 0.78}`,
-    `C ${MID + 13.2 * sx} ${y + d * 0.48}`,
-    `${b} ${y + d * 0.22}`,
-    `${b} ${y}`,
-  ].join(' ')
-}
-
-function knobY(x, { tab, ttb }) {
-  const a = ttb ? MID - NECK : MID + NECK
-  const b = ttb ? MID + NECK : MID - NECK
-  const sy = ttb ? 1 : -1
-  // Right T→B: tab goes right (+X). Left B→T: tab goes left (-X).
-  const dir = ttb ? (tab ? 1 : -1) : tab ? -1 : 1
-  const d = 17.5 * dir
-
-  return [
-    `L ${x} ${a}`,
-    `C ${x + d * 0.22} ${a}`,
-    `${x + d * 0.48} ${MID - 13.2 * sy}`,
-    `${x + d * 0.78} ${MID - 11.4 * sy}`,
-    `C ${x + d * 1.06} ${MID - 6.2 * sy}`,
-    `${x + d * 1.06} ${MID + 6.2 * sy}`,
-    `${x + d * 0.78} ${MID + 11.4 * sy}`,
-    `C ${x + d * 0.48} ${MID + 13.2 * sy}`,
-    `${x + d * 0.22} ${b}`,
-    `${x} ${b}`,
-  ].join(' ')
-}
-
-function sideX(kind, y, ltr) {
-  if (kind === 'F') return ltr ? `L ${100 - BODY} ${y}` : `L ${BODY} ${y}`
-  return `${knobX(y, { tab: kind === 'T', ltr })} L ${ltr ? 100 - BODY : BODY} ${y}`
-}
-
-function sideY(kind, x, ttb) {
-  if (kind === 'F') return ttb ? `L ${x} ${100 - BODY}` : `L ${x} ${BODY}`
-  return `${knobY(x, { tab: kind === 'T', ttb })} L ${x} ${ttb ? 100 - BODY : BODY}`
-}
-
-function buildJigsaw(n, e, s, w) {
-  return [
-    `M ${BODY} ${BODY}`,
-    sideX(n, BODY, true),
-    sideY(e, 100 - BODY, true),
-    sideX(s, 100 - BODY, false),
-    sideY(w, BODY, false),
+    'M 24 24',
+    topSide(north),
+    rightSide(east),
+    bottomSide(south),
+    leftSide(west),
     'Z',
   ].join(' ')
 }
 
-const SHAPES = {
+const CORE_SHAPES = {
   classic: buildJigsaw('T', 'B', 'T', 'B'),
-  alt: buildJigsaw('B', 'T', 'B', 'T'),
+  opposite: buildJigsaw('B', 'T', 'B', 'T'),
+  'top-tab': buildJigsaw('T', 'B', 'B', 'T'),
+  'top-blank': buildJigsaw('B', 'T', 'T', 'B'),
+  'side-tab': buildJigsaw('B', 'T', 'B', 'T'),
+  'side-blank': buildJigsaw('T', 'B', 'T', 'B'),
   adjacent: buildJigsaw('T', 'T', 'B', 'B'),
-  adjacentAlt: buildJigsaw('B', 'B', 'T', 'T'),
-  edge: buildJigsaw('F', 'T', 'B', 'T'),
-  edgeAlt: buildJigsaw('T', 'F', 'T', 'B'),
-  edgeBottom: buildJigsaw('T', 'B', 'F', 'T'),
-  corner: buildJigsaw('F', 'F', 'T', 'B'),
-  cornerAlt: buildJigsaw('F', 'T', 'B', 'F'),
-  cornerBL: buildJigsaw('T', 'B', 'F', 'F'),
-  tri: buildJigsaw('T', 'T', 'T', 'B'),
-  triAlt: buildJigsaw('T', 'B', 'T', 'T'),
+  'adjacent-blank': buildJigsaw('B', 'B', 'T', 'T'),
+}
+
+const SHAPES = {
+  ...CORE_SHAPES,
+  // Backwards-compatible aliases for previous piece configurations.
+  alt: CORE_SHAPES.opposite,
+  adjacentAlt: CORE_SHAPES['adjacent-blank'],
+  edge: CORE_SHAPES['top-tab'],
+  edgeAlt: CORE_SHAPES['side-tab'],
+  edgeBottom: CORE_SHAPES['top-blank'],
+  corner: CORE_SHAPES.adjacent,
+  cornerAlt: CORE_SHAPES['adjacent-blank'],
+  cornerBL: CORE_SHAPES['top-tab'],
+  tri: CORE_SHAPES.classic,
+  triAlt: CORE_SHAPES.opposite,
 }
 
 const VARIANT_CLASS = {
@@ -142,7 +123,7 @@ export default function PuzzlePiece({
       aria-hidden="true"
     >
       <svg
-        viewBox="0 0 100 100"
+        viewBox="0 0 120 120"
         width="100%"
         height="100%"
         focusable="false"
@@ -161,6 +142,8 @@ export default function PuzzlePiece({
           d={path}
           className="puzzle-piece__path"
           fill={variant === 'gradient' ? `url(#${gradId})` : undefined}
+          strokeLinejoin="round"
+          strokeLinecap="round"
         />
       </svg>
     </div>

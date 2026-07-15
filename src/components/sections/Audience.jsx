@@ -110,7 +110,7 @@ export default function Audience() {
                   >
                     {item.tags.map((tag) => (
                       <li key={tag}>
-                        <span className="inline-flex rounded-full bg-brand-light-pink/45 px-3 py-1 text-xs font-medium text-brand-blue">
+                        <span className="audience-tag inline-flex rounded-full px-3 py-1 text-xs font-medium">
                           {tag}
                         </span>
                       </li>

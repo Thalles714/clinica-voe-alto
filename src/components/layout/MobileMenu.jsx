@@ -105,15 +105,17 @@ export default function MobileMenu({ isOpen, onClose, links, returnFocusRef }) {
     }
   }, [isOpen, onClose, returnFocusRef])
 
-  if (!isOpen || typeof document === 'undefined') return null
+  if (typeof document === 'undefined') return null
 
   return createPortal(
     <div
       id={MOBILE_NAV_ID}
-      className="mobile-nav"
+      className={['mobile-nav', isOpen ? 'is-open' : 'is-closed'].join(' ')}
       role="dialog"
-      aria-modal="true"
+      aria-modal={isOpen ? 'true' : undefined}
+      aria-hidden={!isOpen}
       aria-label="Menu de navegação"
+      inert={isOpen ? undefined : ''}
     >
       <button
         type="button"
@@ -141,7 +143,11 @@ export default function MobileMenu({ isOpen, onClose, links, returnFocusRef }) {
             <a
               key={link.href}
               href={link.href}
-              onClick={onClose}
+              onClick={() => {
+                // Close first so body scroll lock is released before the
+                // native hash scroll positions the target section.
+                onClose()
+              }}
               className="mobile-nav__link"
             >
               {link.label}

@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Temporary audit/review scratch folders
+.tmp-*/
+.tmp-*.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
 import Container from '../ui/Container'
+import InteractiveImage from '../ui/InteractiveImage'
+import Reveal from '../ui/Reveal'
 import SectionTitle from '../ui/SectionTitle'
 import { specialties, specialtyWhatsappMessage } from '../../data/specialties'
 import { whatsappUrl } from '../../data/clinic'
@@ -10,7 +11,7 @@ function ArrowIcon() {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
-      className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+      className="specialty-card__arrow h-4 w-4 shrink-0"
       aria-hidden="true"
     >
       <path
@@ -22,190 +23,52 @@ function ArrowIcon() {
   )
 }
 
-const cardThemes = [
-  {
-    card: 'border border-line bg-surface shadow-sm shadow-brand-dark/10',
-    badge: 'bg-brand-blue/10 text-brand-blue ring-1 ring-brand-blue/15',
-    title: 'text-ink',
-    description: 'text-ink-muted',
-    link: 'text-brand-blue hover:text-brand-pink focus-visible:ring-brand-blue/30',
-  },
-  {
-    card: 'border border-brand-blue bg-brand-blue shadow-md shadow-brand-blue/20',
-    badge: 'bg-brand-white/15 text-brand-light-pink ring-1 ring-brand-white/20',
-    title: 'text-brand-white',
-    description: 'text-brand-white/80',
-    link: 'text-brand-light-pink hover:text-brand-white focus-visible:ring-brand-white/40',
-  },
-]
-
-/* Regular white / blue alternation */
-const cardTonePattern = [0, 1]
-
-function SpecialtyCard({ specialty, decorative = false, toneIndex = 0 }) {
-  const theme = cardThemes[toneIndex]
+function SpecialtyCard({ specialty, index }) {
+  const ctaText = specialty.ctaLabel ?? `Falar sobre ${specialty.title}`
 
   return (
-    <div
-      className={[
-            'card-hover group flex h-full w-[16.5rem] shrink-0 flex-col rounded-3xl p-4 sm:w-[20rem] sm:p-5 lg:w-[21.25rem] lg:p-6',
-        theme.card,
-        !decorative && 'specialty-card',
-      ]
-        .filter(Boolean)
-        .join(' ')}
+    <Reveal
+      as="li"
+      delay={(index % 3) * 70}
+      className="specialties-grid__item h-full"
     >
-      <span
-        className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide ${theme.badge}`}
-      >
-        {specialty.category}
-      </span>
+      <article className="specialty-card group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-sm shadow-brand-dark/5">
+        <InteractiveImage
+          src={specialty.image}
+          alt={specialty.alt}
+          width={specialty.imageWidth}
+          height={specialty.imageHeight}
+          intensity="soft"
+          reveal="fade-scale"
+          className="specialty-card__media relative aspect-[16/10] bg-surface-muted"
+          objectPosition={specialty.objectPosition ?? 'object-center'}
+        />
 
-      <h3 className={`mt-3 text-base font-semibold leading-snug sm:text-lg ${theme.title}`}>
-        {specialty.title}
-      </h3>
-
-      <p className={`mt-2 flex-1 text-sm leading-relaxed ${theme.description}`}>
-        {specialty.description}
-      </p>
-
-      {decorative ? (
-        <span
-          className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold ${theme.link.split(' ')[0]}`}
-          aria-hidden="true"
-        >
-          Falar sobre este atendimento
-          <ArrowIcon />
-        </span>
-      ) : (
-        <a
-          href={whatsappUrl(specialtyWhatsappMessage(specialty.title))}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`ui-button group mt-4 inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 ${theme.link}`}
-          aria-label={`Falar sobre ${specialty.title} pelo WhatsApp`}
-        >
-          Falar sobre este atendimento
-          <ArrowIcon />
-        </a>
-      )}
-    </div>
-  )
-}
-
-function SpecialtySet({ decorative = false }) {
-  return (
-    <div
-      className="specialties-marquee-set"
-      role={decorative ? undefined : 'list'}
-      aria-label={decorative ? undefined : 'Lista de especialidades'}
-      aria-hidden={decorative ? true : undefined}
-    >
-      {specialties.map((specialty, index) => (
-        <div
-          key={`${decorative ? 'dup-' : ''}${specialty.title}`}
-          className="shrink-0"
-          role={decorative ? undefined : 'listitem'}
-        >
-          <SpecialtyCard
-            specialty={specialty}
-            decorative={decorative}
-            toneIndex={cardTonePattern[index % 2]}
-          />
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
+          <span className="specialty-card__category">{specialty.category}</span>
+          <h3 className="mt-3 text-lg font-semibold leading-snug text-ink sm:text-xl">
+            {specialty.title}
+          </h3>
+          <p className="mt-2.5 flex-1 text-sm leading-relaxed text-ink-muted sm:text-[0.95rem]">
+            {specialty.description}
+          </p>
+          <a
+            href={whatsappUrl(specialtyWhatsappMessage(specialty.title))}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ui-button specialty-card__cta mt-5 inline-flex min-h-14 w-full items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-left text-sm font-semibold leading-snug focus:outline-none"
+            aria-label={`${ctaText} pelo WhatsApp`}
+          >
+            <span>{ctaText}</span>
+            <ArrowIcon />
+          </a>
         </div>
-      ))}
-    </div>
+      </article>
+    </Reveal>
   )
 }
 
 export default function Specialties() {
-  const trackRef = useRef(null)
-  const pausedRef = useRef(false)
-  const [paused, setPaused] = useState(false)
-  const [reduceMotion, setReduceMotion] = useState(false)
-
-  useEffect(() => {
-    pausedRef.current = paused
-  }, [paused])
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const syncMotion = () => setReduceMotion(media.matches)
-    syncMotion()
-    media.addEventListener('change', syncMotion)
-    return () => media.removeEventListener('change', syncMotion)
-  }, [])
-
-  useEffect(() => {
-    const track = trackRef.current
-    if (!track || reduceMotion) return undefined
-
-    let frameId = 0
-    let offset = 0
-    let lastTime = 0
-    let inView = true
-    let speed = window.matchMedia('(max-width: 767px)').matches ? 38 : 46
-    const root = track.closest('.specialties-marquee')
-
-    const tick = (time) => {
-      if (!lastTime) lastTime = time
-      const delta = Math.min(time - lastTime, 32)
-      lastTime = time
-
-      if (inView && !pausedRef.current) {
-        offset -= (speed * delta) / 1000
-        const loopWidth = track.scrollWidth / 2
-        if (loopWidth > 0 && Math.abs(offset) >= loopWidth) {
-          offset += loopWidth
-        }
-        track.style.transform = `translate3d(${offset}px, 0, 0)`
-      }
-
-      if (inView) {
-        frameId = window.requestAnimationFrame(tick)
-      } else {
-        frameId = 0
-      }
-    }
-
-    const start = () => {
-      if (!frameId) {
-        lastTime = 0
-        frameId = window.requestAnimationFrame(tick)
-      }
-    }
-
-    const onResize = () => {
-      speed = window.matchMedia('(max-width: 767px)').matches ? 38 : 46
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        inView = entry.isIntersecting
-        if (inView) start()
-        else if (frameId) {
-          window.cancelAnimationFrame(frameId)
-          frameId = 0
-        }
-      },
-      { threshold: 0.05 },
-    )
-    if (root) observer.observe(root)
-
-    window.addEventListener('resize', onResize, { passive: true })
-    start()
-
-    return () => {
-      observer.disconnect()
-      window.removeEventListener('resize', onResize)
-      if (frameId) window.cancelAnimationFrame(frameId)
-      track.style.transform = ''
-    }
-  }, [reduceMotion])
-
-  const pause = () => setPaused(true)
-  const resume = () => setPaused(false)
-
   return (
     <section
       id="especialidades"
@@ -220,59 +83,20 @@ export default function Specialties() {
       <Container className="relative z-10">
         <SectionTitle
           eyebrow="Especialidades"
-          title="Especialidades que se complementam em torno de cada necessidade"
-          description="Da aprendizagem à comunicação, do comportamento ao suporte familiar. Se ainda não souber qual atendimento procurar, fale conosco — orientamos o caminho."
+          title="Diferentes especialidades para cada fase e necessidade"
+          description="Psicologia, Psicopedagogia, Fonoaudiologia, Terapia ABA, Neurologia e outros atendimentos em um só lugar. Se houver dúvida, a equipe orienta qual especialidade procurar."
           eyebrowVariant="blue"
         />
-      </Container>
 
-      <div className="relative z-10 mt-2">
-        <div
-          className={[
-            'specialties-marquee',
-            reduceMotion ? 'is-static' : '',
-            paused ? 'is-paused' : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
-          onPointerDown={pause}
-          onPointerUp={resume}
-          onPointerCancel={resume}
-          onPointerLeave={resume}
-          onMouseEnter={() => {
-            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-              pause()
-            }
-          }}
-          onMouseLeave={resume}
-          onFocusCapture={pause}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) {
-              resume()
-            }
-          }}
+        <ul
+          className="specialties-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6"
+          aria-label="Lista de especialidades"
         >
-          <div
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[var(--surface-muted)] to-transparent sm:w-14 xl:w-20"
-            aria-hidden="true"
-          />
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[var(--surface-muted)] to-transparent sm:w-14 xl:w-20"
-            aria-hidden="true"
-          />
-
-          <div ref={trackRef} className="specialties-marquee-track">
-            <SpecialtySet />
-            <SpecialtySet decorative />
-          </div>
-        </div>
-
-        <p className="mx-auto mt-3 max-w-3xl px-4 text-center text-xs leading-snug text-ink-muted sm:mt-4 sm:text-sm">
-          {reduceMotion
-            ? 'Deslize para ver mais especialidades.'
-            : 'Desliza automaticamente. Toque para pausar.'}
-        </p>
-      </div>
+          {specialties.map((specialty, index) => (
+            <SpecialtyCard key={specialty.title} specialty={specialty} index={index} />
+          ))}
+        </ul>
+      </Container>
     </section>
   )
 }

@@ -1,52 +1,7 @@
 import { useState } from 'react'
 import Button from './Button'
 import { whatsappUrl } from '../../data/clinic'
-
-const options = [
-  {
-    id: 'crianca',
-    label: 'Atendimento para criança',
-    reply:
-      'Entendi. Podemos ajudar no acompanhamento infantil. No WhatsApp, a equipe ouve sua necessidade e indica o caminho — sem diagnóstico automático por aqui.',
-    whatsappMessage:
-      'Olá, gostaria de informações sobre atendimento infantil na Clínica Voe Alto.',
-  },
-  {
-    id: 'adolescente',
-    label: 'Atendimento para adolescente',
-    reply:
-      'Certo. A adolescência pode trazer mudanças emocionais, escolares e sociais. A equipe orienta o atendimento mais adequado para esse momento.',
-    whatsappMessage:
-      'Olá, gostaria de informações sobre atendimento para adolescentes na Clínica Voe Alto.',
-  },
-  {
-    id: 'adulto',
-    label: 'Atendimento para adulto',
-    reply:
-      'Entendi. Também acompanhamos adultos que buscam cuidado emocional, bem-estar e orientação. A conversa pelo WhatsApp ajuda a definir o caminho.',
-    whatsappMessage:
-      'Olá, gostaria de informações sobre atendimento para adultos na Clínica Voe Alto.',
-  },
-  {
-    id: 'especialidades',
-    label: 'Tenho dúvidas sobre especialidades',
-    reply:
-      'Não tem problema se você ainda não sabe qual especialidade procurar. Conte o que está acontecendo pelo WhatsApp. A equipe orienta o caminho mais adequado.',
-    whatsappMessage:
-      'Olá, gostaria de ajuda para entender qual especialidade procurar na Clínica Voe Alto.',
-  },
-  {
-    id: 'agendar',
-    label: 'Quero agendar uma avaliação',
-    reply:
-      'Perfeito. Continue no WhatsApp para falar com a equipe, verificar disponibilidade e combinar o agendamento.',
-    whatsappMessage:
-      'Olá, gostaria de agendar uma avaliação na Clínica Voe Alto.',
-  },
-]
-
-const initialMessage =
-  'Olá! Posso te ajudar a iniciar o contato com a Clínica Voe Alto. Escolha uma opção para que a equipe entenda melhor sua necessidade pelo WhatsApp.'
+import { assistantInitialMessage, assistantOptions } from '../../data/assistant'
 
 function ChatIcon() {
   return (
@@ -68,7 +23,7 @@ function ChatIcon() {
 
 export default function AssistantChat() {
   const [selectedId, setSelectedId] = useState(null)
-  const selected = options.find((option) => option.id === selectedId) ?? null
+  const selected = assistantOptions.find((option) => option.id === selectedId) ?? null
 
   return (
     <div className="relative mx-auto w-full max-w-md lg:max-w-none">
@@ -97,7 +52,7 @@ export default function AssistantChat() {
 
         <div className="flex flex-1 flex-col gap-3 px-4 py-4 sm:px-5 sm:py-5">
           <div className="max-w-[92%] rounded-2xl rounded-tl-md bg-surface-muted px-3.5 py-3 text-sm leading-relaxed text-ink">
-            {initialMessage}
+            {assistantInitialMessage}
           </div>
 
           {selected && (
@@ -113,7 +68,7 @@ export default function AssistantChat() {
 
           {!selected ? (
             <div className="mt-1 flex flex-col gap-2" role="group" aria-label="Opções de orientação">
-              {options.map((option) => (
+              {assistantOptions.map((option) => (
                 <button
                   key={option.id}
                   type="button"

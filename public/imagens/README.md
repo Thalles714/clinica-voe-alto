@@ -2,6 +2,7 @@
 
 ## Hero
 - hero/hero-clinica-voe-alto.jpg
+- hero/hero-clinica-voe-alto-hq.webp (versão otimizada em alta qualidade usada no site)
 
 ## Estrutura
 - estrutura/fachada-clinica-voe-alto.jpg

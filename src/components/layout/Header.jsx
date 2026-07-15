@@ -1,15 +1,15 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Button from '../ui/Button'
 import MobileMenu, { MOBILE_NAV_ID } from './MobileMenu'
 import ThemeToggle from '../ui/ThemeToggle'
 import { clinic, navLinks, whatsappUrl } from '../../data/clinic'
 
 /**
- * Top bar motion — Wolverine animacao-top-bar:
- * - inner offset settles on scroll
- * - width morphs in px (fluid) from full → content-hugging pill
- * - original logo asset scales; no custom wordmark
- * - hide only after hero ends, on scroll down
+ * Top bar motion:
+ * - starts expanded over the Hero
+ * - morphs into a deterministic centered pill after a short scroll
+ * - stays visible for the rest of the page (no auto-hide)
+ * - never measures transformed content or scales the logo
  */
 function MenuIcon() {
   return (
@@ -33,150 +33,64 @@ function MenuIcon() {
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [compact, setCompact] = useState(false)
-  const [hidden, setHidden] = useState(false)
-  const [barWidth, setBarWidth] = useState(undefined)
+  const [isCompact, setIsCompact] = useState(false)
 
-  const shellRef = useRef(null)
-  const headRef = useRef(null)
   const menuBtnRef = useRef(null)
-  const lastYRef = useRef(0)
-  const tickingRef = useRef(false)
-  const compactRef = useRef(false)
+  const scrollRafRef = useRef(0)
 
   useEffect(() => {
-    compactRef.current = compact
-  }, [compact])
-
-  useLayoutEffect(() => {
-    const measureCompactWidth = () => {
-      const head = headRef.current
-      if (!head) return 0
-
-      const logo = head.querySelector('.site-header__logo')
-      const nav = head.querySelector('.site-header__nav')
-      const actions = head.querySelector('.site-header__actions')
-      const gap =
-        Number.parseFloat(getComputedStyle(head).columnGap) ||
-        Number.parseFloat(getComputedStyle(head).gap) ||
-        32
-
-      const parts = [logo, nav, actions].filter((el) => {
-        if (!el) return false
-        return getComputedStyle(el).display !== 'none'
-      })
-
-      const content = parts.reduce(
-        (sum, el) => sum + el.getBoundingClientRect().width,
-        0,
-      )
-
-      // Extra room for pill inset, CTA label length, and subpixel rounding.
-      const padX = 20
-      return Math.ceil(content + gap * Math.max(parts.length - 1, 0) + padX)
-    }
-
-    const measure = () => {
-      const shell = shellRef.current
-      if (!shell) return
-
-      if (compactRef.current) {
-        setBarWidth(measureCompactWidth())
-      } else {
-        setBarWidth(Math.ceil(shell.clientWidth))
-      }
-    }
-
-    measure()
-    const id = window.requestAnimationFrame(measure)
-    // Remeasure after fonts/layout settle — longer CTA can otherwise clip the pill.
-    const settleId = window.setTimeout(measure, 120)
-    window.addEventListener('resize', measure)
-
-    return () => {
-      window.cancelAnimationFrame(id)
-      window.clearTimeout(settleId)
-      window.removeEventListener('resize', measure)
-    }
-  }, [compact, menuOpen])
-
-  useEffect(() => {
-    lastYRef.current = window.scrollY
-
-    const getHideAfterY = () => {
-      const hero = document.getElementById('inicio')
-      if (!hero) return 720
-      return Math.max(hero.offsetTop + hero.offsetHeight - 48, 560)
-    }
-
     const update = () => {
+      scrollRafRef.current = 0
       const y = window.scrollY
-      const lastY = lastYRef.current
-      const delta = y - lastY
-      const hideAfterY = getHideAfterY()
-
-      setCompact((prev) => {
-        const mobile = window.innerWidth < 1024
-        // Mobile: switch to the floating pill sooner so it stops covering hero copy.
-        if (prev) return y > (mobile ? 36 : 56)
-        return y > (mobile ? 48 : 120)
+      setIsCompact((current) => {
+        const next = current ? y > 24 : y > 88
+        return current === next ? current : next
       })
-
-      if (y < hideAfterY) {
-        setHidden(false)
-      } else if (delta > 10) {
-        setHidden(true)
-      } else if (delta < -10) {
-        setHidden(false)
-      }
-
-      lastYRef.current = y
-      tickingRef.current = false
     }
 
     const onScroll = () => {
-      if (tickingRef.current) return
-      tickingRef.current = true
-      window.requestAnimationFrame(update)
+      if (scrollRafRef.current) return
+      scrollRafRef.current = window.requestAnimationFrame(update)
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
     update()
 
     return () => {
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      if (scrollRafRef.current) {
+        window.cancelAnimationFrame(scrollRafRef.current)
+      }
     }
   }, [])
 
+  const closeMenu = useCallback(() => setMenuOpen(false), [])
+
   return (
     <header
-      ref={shellRef}
+      data-header-state={isCompact ? 'compact' : 'expanded'}
       className={[
         'site-header',
-        compact ? 'is-compact' : '',
-        hidden && !menuOpen ? 'is-hidden' : '',
+        isCompact ? 'is-compact' : 'is-expanded',
+        menuOpen ? 'is-menu-open' : '',
       ]
         .filter(Boolean)
         .join(' ')}
     >
-      <div
-        className="site-header__inner"
-        style={barWidth ? { width: `${barWidth}px` } : undefined}
-      >
+      <div className="site-header__inner">
         <span className="site-header__bg" aria-hidden="true" />
 
-        <div ref={headRef} className="site-header__head">
+        <div className="site-header__head">
           <a
             href="#inicio"
             className="site-header__logo ui-button"
             aria-label={`${clinic.name}, voltar ao início`}
             onClick={(event) => {
               event.preventDefault()
-              setMenuOpen(false)
-              setHidden(false)
-              const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+              closeMenu()
+              const reduceMotion = window.matchMedia(
+                '(prefers-reduced-motion: reduce)',
+              ).matches
               window.scrollTo({
                 top: 0,
                 left: 0,
@@ -186,7 +100,6 @@ export default function Header() {
               if (window.location.hash) {
                 window.history.replaceState(null, '', `${pathname}${search}`)
               }
-              // Sync compact/hidden state after hard reset to top.
               window.requestAnimationFrame(() => {
                 window.dispatchEvent(new Event('scroll'))
               })
@@ -216,7 +129,7 @@ export default function Header() {
               href={whatsappUrl()}
               variant="primary"
               size="sm"
-              className="site-header__cta hidden sm:inline-flex"
+              className="site-header__cta"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Agendar avaliação pelo WhatsApp"
@@ -228,10 +141,7 @@ export default function Header() {
               ref={menuBtnRef}
               type="button"
               className="site-header__menu-btn"
-              onClick={() => {
-                setHidden(false)
-                setMenuOpen(true)
-              }}
+              onClick={() => setMenuOpen(true)}
               aria-label="Abrir menu de navegação"
               aria-expanded={menuOpen}
               aria-controls={MOBILE_NAV_ID}
@@ -242,11 +152,9 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="site-header__spacer" aria-hidden="true" />
-
       <MobileMenu
         isOpen={menuOpen}
-        onClose={() => setMenuOpen(false)}
+        onClose={closeMenu}
         links={navLinks}
         returnFocusRef={menuBtnRef}
       />

@@ -37,7 +37,7 @@ export default function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <a
               href="#inicio"
-              className="inline-block rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2"
+              className="footer-logo-link inline-block rounded-lg focus:outline-none"
               aria-label={`${clinic.name}, voltar ao início`}
             >
               <img
@@ -63,7 +63,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="footer-link text-sm text-ink-muted hover:text-brand-blue focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                    className="footer-link text-sm focus:outline-none"
                   >
                     {link.label}
                   </a>
@@ -82,7 +82,7 @@ export default function Footer() {
                   href={whatsappUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-link font-medium text-brand-blue hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                  className="footer-link footer-contact-link font-medium focus:outline-none"
                   aria-label={`WhatsApp ${formattedPhone}`}
                 >
                   WhatsApp: {formattedPhone}
@@ -93,7 +93,7 @@ export default function Footer() {
                   href={clinic.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-link font-medium text-brand-blue hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                  className="footer-link footer-contact-link font-medium focus:outline-none"
                   aria-label={`Instagram ${clinic.instagramHandle}`}
                 >
                   Instagram: {clinic.instagramHandle}
@@ -104,7 +104,7 @@ export default function Footer() {
                   href={locationUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-link inline-flex items-start gap-2 font-semibold text-brand-blue hover:text-brand-pink focus:outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-brand-blue/30 focus-visible:ring-offset-2 focus-visible:ring-offset-page"
+                  className="footer-link footer-address-link inline-flex items-start gap-2 font-semibold focus:outline-none"
                   aria-label="Ver localização da Clínica Voe Alto no Google Maps"
                 >
                   <PinIcon />
@@ -132,16 +132,12 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 border-t border-line pt-8">
-          <div className="flex flex-col items-center gap-2.5 text-center sm:items-start sm:text-left">
+          <div className="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
             <p className="text-sm text-ink-muted">
               © {currentYear} {clinic.name}. Todos os direitos reservados.
             </p>
             <p className="text-sm text-ink-muted">{clinic.legalEntity}</p>
             <p className="text-xs text-ink-muted">CNPJ: {clinic.cnpj}</p>
-            <p className="mt-1 max-w-xl text-xs leading-relaxed text-ink-muted">
-              Algumas imagens utilizadas neste site são meramente ilustrativas e podem
-              ter sido geradas ou tratadas por inteligência artificial.
-            </p>
           </div>
         </div>
       </Container>

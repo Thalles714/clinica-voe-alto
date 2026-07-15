@@ -1,5 +1,10 @@
 import Container from '../ui/Container'
+import Button from '../ui/Button'
 import AssistantChat from '../ui/AssistantChat'
+import { whatsappUrl } from '../../data/clinic'
+
+const finalMessage =
+  'Olá! Gostaria de receber orientação sobre o atendimento da Clínica Voe Alto.'
 
 const supportItems = [
   'Atendimento infantil, adolescente e adulto',
@@ -57,8 +62,8 @@ export default function FinalCTA() {
               </h2>
 
               <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-white/80 sm:text-lg">
-                Use o assistente para escolher o tema. No WhatsApp, a equipe humana
-                responde com orientação concreta sobre agendamento e especialidades.
+                Se já sabe o que precisa, fale direto com a equipe. Se ainda estiver em dúvida,
+                use o assistente para escolher o tema antes de seguir no WhatsApp.
               </p>
 
               <ul className="mt-8 space-y-3" aria-label="Diferenciais da clínica">
@@ -72,15 +77,23 @@ export default function FinalCTA() {
                 ))}
               </ul>
 
-              <p className="mt-8 max-w-md text-sm leading-relaxed text-brand-white/70 sm:text-base">
-                <span className="lg:hidden">
-                  Escolha uma opção no assistente para iniciar o contato pelo WhatsApp.
-                </span>
-                <span className="hidden lg:inline">
-                  Escolha uma opção no assistente ao lado para iniciar o contato pelo
-                  WhatsApp.
-                </span>
-              </p>
+              <div className="mt-8">
+                <Button
+                  href={whatsappUrl(finalMessage)}
+                  variant="primary"
+                  size="lg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="final-cta__direct"
+                  aria-label="Falar com a equipe da Clínica Voe Alto pelo WhatsApp"
+                >
+                  Falar com a equipe
+                </Button>
+                <p className="mt-3 max-w-md text-sm leading-relaxed text-brand-white/70">
+                  Caminho direto para orientação. O assistente ao lado ajuda quem prefere
+                  escolher uma opção primeiro.
+                </p>
+              </div>
             </div>
 
             <div className="relative z-10">

@@ -9,7 +9,7 @@ import { locationUrl } from '../../data/clinic'
 const galleryItems = [
   {
     title: 'Fachada',
-    description: 'Chegada tranquila, com fácil identificação da clínica no Setor Sul.',
+    description: 'Chegada tranquila, com fácil identificação da clínica em Aparecida de Goiânia.',
     src: '/imagens/estrutura/fachada-clinica-voe-alto.webp',
     alt: 'Ambiente ilustrativo de acolhimento da Clínica Voe Alto',
     featured: true,
@@ -19,8 +19,8 @@ const galleryItems = [
     glow: true,
   },
   {
-    title: 'Recepção',
-    description: 'Primeiro contato acolhedor para famílias e pacientes.',
+    title: 'Acolher',
+    description: 'Ouvir com respeito e atenção para compreender cada necessidade.',
     src: '/imagens/estrutura/recepcao-clinica-voe-alto.webp',
     alt: 'Ambiente ilustrativo de recepção e cuidado da Clínica Voe Alto',
     featured: false,
@@ -30,8 +30,8 @@ const galleryItems = [
     glow: false,
   },
   {
-    title: 'Sala infantil',
-    description: 'Espaço pensado para o acompanhamento de crianças.',
+    title: 'Desenvolver',
+    description: 'Acompanhar cada etapa com estímulos adequados e respeito ao próprio ritmo.',
     src: '/imagens/estrutura/sala-atendimento-infantil.webp',
     alt: 'Ambiente ilustrativo de acompanhamento infantil da Clínica Voe Alto',
     featured: false,
@@ -41,8 +41,8 @@ const galleryItems = [
     glow: false,
   },
   {
-    title: 'Atendimento integrado',
-    description: 'Ambientes preparados para o trabalho multidisciplinar.',
+    title: 'Capacitar',
+    description: 'Fortalecer habilidades e ampliar possibilidades para o dia a dia.',
     src: '/imagens/estrutura/sala-atendimento-multidisciplinar.webp',
     alt: 'Ambiente ilustrativo de atendimento multidisciplinar da Clínica Voe Alto',
     featured: false,
@@ -54,7 +54,7 @@ const galleryItems = [
 ]
 
 const highlights = [
-  'Localização de fácil acesso no Setor Sul, em Goiânia',
+  'Localização de fácil acesso em Aparecida de Goiânia',
   'Ambiente pensado para acolher crianças e famílias',
   'Cuidado presencial com orientação clara desde o primeiro contato',
 ]
@@ -156,7 +156,7 @@ export default function Structure() {
         <SectionTitle
           eyebrow="Nossa estrutura"
           title="Um ambiente preparado para acolher e acompanhar"
-          description="Espaços pensados para crianças, adolescentes, adultos e famílias se sentirem seguros desde a chegada."
+          description="Imagens ilustrativas que representam os princípios que orientam o cuidado da Clínica Voe Alto."
           eyebrowVariant="blue"
         />
 
@@ -193,10 +193,10 @@ export default function Structure() {
             </InteractiveImage>
             <figcaption className="structure-caption pointer-events-none absolute inset-y-0 left-0 z-10 flex max-w-[15rem] flex-col justify-end p-4 sm:max-w-md sm:p-7">
               <p className="text-base font-semibold text-brand-white sm:text-xl">
-                Ambiente de convivência
+                Envolver
               </p>
               <p className="mt-1 text-sm leading-snug text-brand-white/85 sm:text-base sm:leading-relaxed">
-                Um espaço pensado para acolher com mais calma e presença.
+                Criar vínculos, favorecer a participação e construir caminhos em conjunto.
               </p>
             </figcaption>
           </figure>

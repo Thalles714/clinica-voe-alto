@@ -16,7 +16,7 @@ function ChevronIcon({ open }) {
       strokeWidth="2.25"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={`h-5 w-5 shrink-0 transition-transform duration-200 ${open ? 'rotate-180 text-brand-pink' : 'text-brand-blue'}`}
+      className={`faq-trigger__icon h-5 w-5 shrink-0 ${open ? 'is-open' : ''}`}
       aria-hidden="true"
     >
       <path d="m6 9 6 6 6-6" />
@@ -29,26 +29,17 @@ function FaqItem({ item, index, isOpen, onToggle, baseId }) {
   const buttonId = `${baseId}-button-${index}`
 
   return (
-    <Card
-      className={[
-        'overflow-hidden p-0 shadow-sm transition-all duration-200',
-        isOpen
-          ? 'border-brand-light-pink/80 shadow-md shadow-brand-dark/10'
-          : 'border-line',
-      ].join(' ')}
-    >
+    <div className={['faq-item', isOpen ? 'is-open' : ''].filter(Boolean).join(' ')}>
       <h3 className="m-0">
         <button
           id={buttonId}
           type="button"
-          className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left text-ink transition-colors duration-200 hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-blue/30 sm:px-5 sm:py-4"
+          className="faq-trigger"
           aria-expanded={isOpen}
           aria-controls={panelId}
           onClick={onToggle}
         >
-          <span className="text-base font-semibold leading-snug text-ink sm:text-lg">
-            {item.question}
-          </span>
+          <span className="faq-trigger__label">{item.question}</span>
           <ChevronIcon open={isOpen} />
         </button>
       </h3>
@@ -61,14 +52,12 @@ function FaqItem({ item, index, isOpen, onToggle, baseId }) {
         aria-hidden={!isOpen}
       >
         <div>
-          <div className="border-t border-line px-4 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
-          <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
-            {item.answer}
-          </p>
+          <div className="faq-panel__content">
+            <p>{item.answer}</p>
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   )
 }
 

@@ -18,6 +18,13 @@ function isNearViewport(node) {
  * Reveal is driven by IntersectionObserver (and near-viewport check).
  * A long timeout is only a last-resort safety net, then cancelled on success.
  */
+const REVEAL_SETTLE_MS = {
+  mask: 780,
+  'wipe-left': 740,
+  'wipe-up': 760,
+  'fade-scale': 720,
+}
+
 export default function InteractiveImage({
   src,
   alt,
@@ -34,6 +41,9 @@ export default function InteractiveImage({
 }) {
   const ref = useRef(null)
   const [revealed, setRevealed] = useState(reveal === 'none')
+  const [revealSettled, setRevealSettled] = useState(
+    reveal === 'none' || reveal === 'fade-scale',
+  )
   const preset = INTENSITY[intensity] ?? INTENSITY.medium
 
   usePointerImageMotion(ref, { enabled: true })
@@ -98,6 +108,39 @@ export default function InteractiveImage({
     }
   }, [reveal, priority])
 
+  // Drop clip-path after the reveal animation so hover scale keeps rounded corners.
+  useEffect(() => {
+    if (reveal === 'none' || !revealed) return undefined
+    if (reveal === 'fade-scale') return undefined
+
+    const stage = ref.current?.querySelector('.interactive-image__stage')
+    if (!stage) return undefined
+
+    let settled = false
+    const settle = () => {
+      if (settled) return
+      settled = true
+      setRevealSettled(true)
+    }
+
+    const onTransitionEnd = (event) => {
+      if (event.target !== stage) return
+      if (event.propertyName !== 'clip-path') return
+      settle()
+    }
+
+    stage.addEventListener('transitionend', onTransitionEnd)
+    const fallback = window.setTimeout(
+      settle,
+      REVEAL_SETTLE_MS[reveal] ?? 800,
+    )
+
+    return () => {
+      stage.removeEventListener('transitionend', onTransitionEnd)
+      window.clearTimeout(fallback)
+    }
+  }, [reveal, revealed])
+
   return (
     <div
       ref={ref}
@@ -115,6 +158,7 @@ export default function InteractiveImage({
           'interactive-image__stage',
           reveal !== 'none' ? `interactive-image--reveal-${reveal}` : '',
           revealed ? 'is-revealed' : '',
+          revealSettled ? 'is-reveal-settled' : '',
         ]
           .filter(Boolean)
           .join(' ')}
@@ -122,6 +166,7 @@ export default function InteractiveImage({
         <img
           src={src}
           alt={alt}
+          draggable="false"
           width={width}
           height={height}
           loading={priority ? 'eager' : 'lazy'}

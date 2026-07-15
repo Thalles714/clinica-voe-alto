@@ -1,6 +1,7 @@
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import WhatsAppButton from './components/layout/WhatsAppButton'
+import ExitIntentAssistant from './components/ui/ExitIntentAssistant'
 import Hero from './components/sections/Hero'
 import Trust from './components/sections/Trust'
 import Specialties from './components/sections/Specialties'
@@ -21,8 +22,8 @@ export default function App() {
       <Header />
       <main id="conteudo-principal">
         <Hero />
-        <Trust />
         <Specialties />
+        <Trust />
         <ConnectedCarePuzzle />
         <Structure />
         <Process />
@@ -33,6 +34,7 @@ export default function App() {
       </main>
       <Footer />
       <WhatsAppButton />
+      <ExitIntentAssistant />
     </>
   )
 }
