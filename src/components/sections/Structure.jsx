@@ -157,7 +157,7 @@ export default function Structure() {
         <SectionTitle
           eyebrow="Nossa estrutura"
           title="Um ambiente preparado para acolher e acompanhar"
-          description="Imagens ilustrativas que representam os princípios que orientam o cuidado da Clínica Voe Alto."
+          description="Cada detalhe reflete os princípios que orientam o cuidado da Clínica Voe Alto."
           eyebrowVariant="blue"
         />
 
