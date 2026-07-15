@@ -8,8 +8,9 @@ import { locationUrl } from '../../data/clinic'
 
 const galleryItems = [
   {
-    title: 'Fachada',
-    description: 'Chegada tranquila, com fácil identificação da clínica em Aparecida de Goiânia.',
+    title: 'Receber',
+    description:
+      'Um ambiente acolhedor desde a chegada, pensado para receber crianças, adolescentes, adultos e famílias com tranquilidade.',
     src: '/imagens/estrutura/fachada-clinica-voe-alto.webp',
     alt: 'Ambiente ilustrativo de acolhimento da Clínica Voe Alto',
     featured: true,

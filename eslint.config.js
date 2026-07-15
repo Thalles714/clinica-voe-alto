@@ -18,10 +18,4 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
-  {
-    files: ['src/hooks/useTheme.jsx'],
-    rules: {
-      'react-refresh/only-export-components': 'off',
-    },
-  },
 ])

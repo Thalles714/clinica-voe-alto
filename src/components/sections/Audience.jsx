@@ -12,6 +12,7 @@ const audienceMessage =
 const audiences = [
   {
     title: 'Crianças',
+    label: 'Primeiros passos',
     description:
       'Apoio ao desenvolvimento, à aprendizagem e ao comportamento, com orientação também para a família.',
     tags: ['Desenvolvimento', 'Aprendizagem', 'Comportamento'],
@@ -21,6 +22,7 @@ const audiences = [
   },
   {
     title: 'Adolescentes',
+    label: 'Novas fases',
     description:
       'Acompanhamento nas mudanças emocionais, na escola, na socialização e na construção da autoestima.',
     tags: ['Saúde emocional', 'Escola', 'Socialização'],
@@ -30,6 +32,7 @@ const audiences = [
   },
   {
     title: 'Adultos',
+    label: 'Cuidado contínuo',
     description:
       'Cuidado com saúde emocional, bem-estar, autoconhecimento e qualidade de vida.',
     tags: ['Saúde emocional', 'Bem-estar', 'Autoconhecimento'],
@@ -39,6 +42,7 @@ const audiences = [
   },
   {
     title: 'Famílias',
+    label: 'Orientação conjunta',
     description:
       'Orientação para quem tem dúvidas, precisa de suporte e quer compreender melhor as necessidades dos filhos.',
     tags: ['Orientação', 'Suporte', 'Cuidado integrado'],
@@ -91,7 +95,7 @@ export default function Audience() {
                     aria-hidden="true"
                   />
                   <p className="audience-card__label" aria-hidden="true">
-                    {item.title}
+                    {item.label}
                   </p>
                 </InteractiveImage>
 

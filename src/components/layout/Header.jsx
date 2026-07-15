@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Button from '../ui/Button'
 import MobileMenu, { MOBILE_NAV_ID } from './MobileMenu'
-import ThemeToggle from '../ui/ThemeToggle'
 import { clinic, navLinks, whatsappUrl } from '../../data/clinic'
 
 /**
@@ -124,7 +123,6 @@ export default function Header() {
           </nav>
 
           <div className="site-header__actions">
-            <ThemeToggle />
             <Button
               href={whatsappUrl()}
               variant="primary"

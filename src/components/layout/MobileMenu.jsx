@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import Button from '../ui/Button'
-import ThemeToggle from '../ui/ThemeToggle'
 import { whatsappUrl } from '../../data/clinic'
 
 export const MOBILE_NAV_ID = 'mobile-navigation'
@@ -156,10 +155,6 @@ export default function MobileMenu({ isOpen, onClose, links, returnFocusRef }) {
         </nav>
 
         <div className="mobile-nav__footer">
-          <div className="mobile-nav__theme">
-            <span className="mobile-nav__theme-label">Aparência</span>
-            <ThemeToggle />
-          </div>
           <Button
             href={whatsappUrl()}
             variant="primary"
