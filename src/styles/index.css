@@ -48,11 +48,13 @@
 
 html {
   scroll-behavior: smooth;
+  overscroll-behavior-y: none;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  overscroll-behavior-y: none;
   background: var(--page);
   color: var(--ink);
   font-family: var(--font-sans);
@@ -72,7 +74,7 @@ main > section[id] {
 }
 
 .skip-link {
-  position: absolute;
+  position: fixed;
   top: 0.75rem;
   left: 0.75rem;
   z-index: 100;
@@ -84,14 +86,24 @@ main > section[id] {
   font-weight: 600;
   text-decoration: none;
   box-shadow: 0 10px 30px rgb(31 61 113 / 0.28);
-  transform: translateY(-160%);
-  transition: transform 160ms ease;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 0s linear 160ms;
 }
 
 .skip-link:focus,
 .skip-link:focus-visible {
   outline: none;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
   transform: translateY(0);
+  transition-delay: 0s;
   box-shadow:
     0 0 0 2px #fff,
     0 0 0 4px rgb(31 61 113 / 0.45),
@@ -728,6 +740,8 @@ main > section[id] {
   --header-motion-duration: 420ms;
   --header-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --header-entry-duration: 420ms;
+  --mobile-menu-duration: 360ms;
+  --mobile-menu-ease: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-header: var(--header-motion-ease);
   --motion-fast: 180ms;
   --motion-base: 320ms;
@@ -1077,7 +1091,7 @@ main > section[id] {
   justify-content: flex-end;
   visibility: hidden;
   pointer-events: none;
-  transition: visibility 0s linear var(--header-motion-duration);
+  transition: visibility 0s linear var(--mobile-menu-duration);
 }
 
 .mobile-nav.is-open {
@@ -1093,10 +1107,9 @@ main > section[id] {
   padding: 0;
   cursor: pointer;
   background: rgb(12 18 32 / 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   opacity: 0;
-  transition: opacity var(--header-motion-duration) var(--header-motion-ease);
+  transition: opacity 280ms ease-out;
+  will-change: opacity;
 }
 
 .mobile-nav.is-open .mobile-nav__backdrop {
@@ -1114,9 +1127,11 @@ main > section[id] {
   color: var(--ink);
   border-left: 1px solid var(--line);
   box-shadow: -18px 0 48px rgb(12 18 32 / 0.28);
-  transform: translate3d(100%, 0, 0);
-  transition: transform var(--header-motion-duration) var(--header-motion-ease);
+  transform: translate3d(calc(100% + 1px), 0, 0);
+  transition: transform var(--mobile-menu-duration) var(--mobile-menu-ease);
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .mobile-nav.is-open .mobile-nav__panel {
@@ -1174,6 +1189,7 @@ main > section[id] {
   padding: 1rem 1rem 0.5rem;
   background: var(--surface);
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .mobile-nav__link {
@@ -1537,10 +1553,14 @@ main > section[id] {
 .team-carousel__card .interactive-image,
 .team-carousel__card .interactive-image__stage,
 .team-banner .interactive-image,
-.team-banner .interactive-image__stage,
-.audience-card .interactive-image,
-.audience-card .interactive-image__stage {
+.team-banner .interactive-image__stage {
   border-radius: inherit;
+}
+
+.audience-card__media,
+.audience-card__media .interactive-image__stage {
+  width: 100%;
+  border-radius: 0;
 }
 
 .team-banner__edge {

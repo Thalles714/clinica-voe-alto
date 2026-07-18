@@ -1,5 +1,4 @@
 import Container from '../ui/Container'
-import Card from '../ui/Card'
 import Button from '../ui/Button'
 import Reveal from '../ui/Reveal'
 import SectionTitle from '../ui/SectionTitle'
@@ -79,7 +78,7 @@ export default function Audience() {
         <div className="grid gap-4 sm:gap-5 lg:grid-cols-2 lg:gap-6">
           {audiences.map((item, index) => (
             <Reveal key={item.title} delay={index * 100}>
-              <Card hover className="audience-card flex h-full flex-col overflow-hidden p-0">
+              <article className="audience-card card-hover flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface text-ink shadow-sm shadow-brand-dark/5">
                 <InteractiveImage
                   src={item.image}
                   alt={item.alt}
@@ -121,7 +120,7 @@ export default function Audience() {
                     ))}
                   </ul>
                 </div>
-              </Card>
+              </article>
             </Reveal>
           ))}
         </div>
